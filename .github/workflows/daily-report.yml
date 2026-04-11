@@ -1,0 +1,55 @@
+name: 📊 Daily Stock Report
+
+on:
+  schedule:
+    # 港股收盤後生成 (HKT 17:00 = UTC 09:00)，週一至週五
+    - cron: '0 9 * * 1-5'
+  workflow_dispatch:  # 手動觸發按鈕
+    inputs:
+      provider:
+        description: 'LLM Provider'
+        required: false
+        default: 'groq'
+        type: choice
+        options:
+          - groq
+          - claude
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install yfinance feedparser openai
+          # If using Claude provider, also: pip install anthropic
+
+      - name: 🚀 Run daily pipeline
+        run: |
+          cd ${{ github.workspace }}
+          python scripts/run_daily.py --provider ${{ github.event.inputs.provider || 'groq' }}
+        env:
+          TZ: Asia/Hong_Kong
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 📤 Commit & Push
+        run: |
+          git config user.name "stock-daily-bot"
+          git config user.email "bot@stock-daily.local"
+          git add docs/ data/
+          git commit -m "📊 Daily report $(TZ=Asia/Hong_Kong date +%Y-%m-%d)" || echo "No changes"
+          git push
