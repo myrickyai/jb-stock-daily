@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>港美股日報 · 2026年4月13日 星期一</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#E3F2FD;font-family:-apple-system,"PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;top:-40%;left:-20%;width:80%;height:80%;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 70%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-30%;right:-20%;width:70%;height:70%;background:radial-gradient(circle,rgba(245,158,11,0.05) 0%,transparent 70%);pointer-events:none;z-index:0}
+.container{max-width:900px;margin:0 auto;padding:60px 32px;position:relative;z-index:1}
+
+/* Header */
+header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fadeDown 0.6s ease both}
+.logo-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#3B82F6,#F59E0B);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.header-text h1{font-size:22px;font-weight:700;letter-spacing:0.5px}
+.header-meta{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:500}
+.badge-date{background:rgba(245,158,11,0.15);color:#F59E0B;border:1px solid rgba(245,158,11,0.25)}
+.badge-count{background:rgba(100,116,139,0.15);color:#94A3B8;border:1px solid rgba(100,116,139,0.2)}
+.badge-hk{background:rgba(239,68,68,0.12);color:#FCA5A5;border:1px solid rgba(239,68,68,0.2)}
+.badge-us{background:rgba(59,130,246,0.12);color:#93C5FD;border:1px solid rgba(59,130,246,0.2)}
+
+/* Summary Card */
+.summary-card{background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(245,158,11,0.02));border:1px solid rgba(245,158,11,0.2);border-radius:16px;padding:24px 28px;margin-bottom:28px;animation:fadeUp 0.5s ease both}
+.summary-card h2{font-size:15px;font-weight:600;color:#F59E0B;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.summary-card p{font-size:14px;line-height:1.8;color:#CBD5E1}
+
+/* Sections */
+.section{margin-bottom:24px;animation:fadeUp 0.5s ease both}
+.section-title{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;margin-bottom:14px;color:#E3F2FD}
+.section-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Tables */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:12px}
+.data-table th{text-align:left;padding:8px 10px;color:#64748B;font-weight:500;border-bottom:1px solid rgba(255,255,255,0.06);font-size:11.5px;text-transform:uppercase;letter-spacing:0.5px}
+.data-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.data-table tr:hover{background:rgba(255,255,255,0.02)}
+.symbol{color:#64748B;font-size:11px;margin-left:6px}
+.price-up{color:#10B981;font-weight:600}
+.price-down{color:#EF4444;font-weight:600}
+.price-neutral{color:#94A3B8}
+
+/* Cards */
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px 24px;margin-bottom:12px;transition:all 0.2s ease}
+.card:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12);transform:translateY(-1px)}
+.card h3{font-size:14.5px;font-weight:600;margin-bottom:8px}
+.card p{font-size:13.5px;color:#94A3B8;line-height:1.75}
+
+/* News Cards */
+.news-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 22px;margin-bottom:10px;transition:all 0.2s ease;animation:fadeUp 0.5s ease both}
+.news-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(245,158,11,0.2);transform:translateY(-2px)}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.news-emoji{font-size:18px}
+.news-tag{font-size:11.5px;color:#94A3B8;font-weight:500;background:rgba(100,116,139,0.15);padding:2px 8px;border-radius:10px}
+.impact-badge{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:10px}
+.news-card h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.news-card p{font-size:13px;color:#94A3B8;line-height:1.7}
+
+/* Movers */
+.movers-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.mover-chip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px 14px;font-size:12.5px;display:flex;align-items:center;gap:8px}
+.mover-name{font-weight:600;color:#E3F2FD}
+.mover-reason{color:#64748B;font-size:11.5px}
+
+/* Keywords */
+.keywords{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.keyword{background:rgba(139,92,246,0.1);color:#A78BFA;border:1px solid rgba(139,92,246,0.2);padding:4px 14px;border-radius:20px;font-size:12.5px;font-weight:500;transition:all 0.2s}
+.keyword:hover{background:rgba(139,92,246,0.2);transform:scale(1.03)}
+
+/* Alerts */
+.alert-card{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-left:3px solid #EF4444;border-radius:12px;padding:16px 20px;margin-bottom:10px}
+.alert-card ul{list-style:none;padding:0}
+.alert-card li{font-size:13px;color:#FCA5A5;padding:4px 0;line-height:1.6}
+.alert-card li::before{content:"⚠️ ";margin-right:4px}
+
+/* Analysis text */
+.analysis-text{font-size:13.5px;color:#94A3B8;line-height:1.8;margin-bottom:12px}
+
+/* Footer */
+.footer{text-align:center;padding:40px 0 20px;color:#475569;font-size:11.5px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+
+/* Table container for scroll on mobile */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Animations */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
+@media(max-width:640px){
+  .container{padding:32px 16px}
+  .header-text h1{font-size:18px}
+  .data-table{font-size:12px}
+  .movers-grid{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="logo-icon">📊</div>
+    <div class="header-text">
+      <h1>港美股日報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">2026年4月13日 星期一</span>
+        <span class="badge badge-count">7個板塊</span>
+        <span class="badge badge-hk">🇭🇰 港股</span>
+        <span class="badge badge-us">🇺🇸 美股</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Core Summary -->
+  <div class="summary-card">
+    <h2>📋 核心摘要</h2>
+    <p>港股今日微漲，恒生指數上升0.55%。美股則出現分化，納斯達克綜合指數微漲，而道瓊斯工業平均指數下跌。今日市場走勢主要受地緣政治和科技板塊的影響。</p>
+  </div>
+
+  <!-- HK Market -->
+  <div class="section" style="animation-delay:0.10s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(239,68,68,0.12)">🇭🇰</div>
+      港股行情
+    </div>
+    <div class="card">
+      <p class="analysis-text">港股今日整體表現穩定，恒生指數上升0.55%。市場焦點集中在科技和金融板塊，部分個股表現出色。</p>
+      <div class="movers-grid">
+        <div class="mover-chip">
+              <span class="mover-name">阿里巴巴</span>
+              <span class="price-up">+2.12%</span>
+              <span class="mover-reason">公司公佈最新財報，表現超出預期</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">比亞迪</span>
+              <span class="price-up">+3.24%</span>
+              <span class="mover-reason">新能源汽車板塊走強</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">理想汽車</span>
+              <span class="price-up">+3.20%</span>
+              <span class="mover-reason">新能源汽車板塊走強</span>
+            </div>
+
+      </div>
+      <p class="analysis-text">科技和金融板塊表現較好，地產和消費板塊則相對穩定</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>指數</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+          <tbody><tr>
+              <td>恒生指數<span class="symbol">^HSI</span></td>
+              <td class="price-up">25893.54</td>
+              <td class="price-up">▲ +0.55%</td>
+              <td>2.6B</td>
+            </tr>
+</tbody>
+        </table>
+      </div>
+      <details>
+        <summary style="color:#64748B;font-size:12px;cursor:pointer;margin:8px 0">展開全部港股 ▾</summary>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+            <tbody><tr>
+              <td>騰訊控股<span class="symbol">0700.HK</span></td>
+              <td class="price-down">504.5</td>
+              <td class="price-down">▼ -0.79%</td>
+              <td>20.7M</td>
+            </tr>
+<tr>
+              <td>阿里巴巴<span class="symbol">9988.HK</span></td>
+              <td class="price-up">125.5</td>
+              <td class="price-up">▲ +2.12%</td>
+              <td>78.4M</td>
+            </tr>
+<tr>
+              <td>美團<span class="symbol">3690.HK</span></td>
+              <td class="price-down">87.6</td>
+              <td class="price-down">▼ -0.45%</td>
+              <td>31.5M</td>
+            </tr>
+<tr>
+              <td>網易<span class="symbol">9999.HK</span></td>
+              <td class="price-up">178.4</td>
+              <td class="price-up">▲ +0.79%</td>
+              <td>3.8M</td>
+            </tr>
+<tr>
+              <td>京東集團<span class="symbol">9618.HK</span></td>
+              <td class="price-down">111.4</td>
+              <td class="price-down">▼ -0.27%</td>
+              <td>6.1M</td>
+            </tr>
+<tr>
+              <td>小米集團<span class="symbol">1810.HK</span></td>
+              <td class="price-down">30.9</td>
+              <td class="price-down">▼ -1.47%</td>
+              <td>168.3M</td>
+            </tr>
+<tr>
+              <td>比亞迪電子<span class="symbol">0285.HK</span></td>
+              <td class="price-down">28.1</td>
+              <td class="price-down">▼ -0.07%</td>
+              <td>14.8M</td>
+            </tr>
+<tr>
+              <td>百度集團<span class="symbol">9888.HK</span></td>
+              <td class="price-down">108.6</td>
+              <td class="price-down">▼ -0.91%</td>
+              <td>13.9M</td>
+            </tr>
+<tr>
+              <td>商湯集團<span class="symbol">0020.HK</span></td>
+              <td class="price-up">2.01</td>
+              <td class="price-up">▲ +1.01%</td>
+              <td>356.6M</td>
+            </tr>
+<tr>
+              <td>匯豐控股<span class="symbol">0005.HK</span></td>
+              <td class="price-up">139.7</td>
+              <td class="price-up">▲ +0.58%</td>
+              <td>16.7M</td>
+            </tr>
+<tr>
+              <td>工商銀行<span class="symbol">1398.HK</span></td>
+              <td class="price-up">6.97</td>
+              <td class="price-up">▲ +0.58%</td>
+              <td>140.2M</td>
+            </tr>
+<tr>
+              <td>中國銀行<span class="symbol">3988.HK</span></td>
+              <td class="price-up">5.04</td>
+              <td class="price-up">▲ +0.20%</td>
+              <td>157.7M</td>
+            </tr>
+<tr>
+              <td>中國平安<span class="symbol">2318.HK</span></td>
+              <td class="price-up">62.75</td>
+              <td class="price-up">▲ +0.80%</td>
+              <td>27.5M</td>
+            </tr>
+<tr>
+              <td>香港交易所<span class="symbol">0388.HK</span></td>
+              <td class="price-up">408.4</td>
+              <td class="price-up">▲ +0.05%</td>
+              <td>4.1M</td>
+            </tr>
+<tr>
+              <td>友邦保險<span class="symbol">1299.HK</span></td>
+              <td class="price-up">88.95</td>
+              <td class="price-up">▲ +0.51%</td>
+              <td>16.9M</td>
+            </tr>
+<tr>
+              <td>新鴻基地產<span class="symbol">0016.HK</span></td>
+              <td class="price-up">138.7</td>
+              <td class="price-up">▲ +0.36%</td>
+              <td>4.5M</td>
+            </tr>
+<tr>
+              <td>華潤置地<span class="symbol">1109.HK</span></td>
+              <td class="price-up">29.42</td>
+              <td class="price-up">▲ +0.14%</td>
+              <td>15.9M</td>
+            </tr>
+<tr>
+              <td>中國海外發展<span class="symbol">0688.HK</span></td>
+              <td class="price-up">11.93</td>
+              <td class="price-up">▲ +1.71%</td>
+              <td>18.4M</td>
+            </tr>
+<tr>
+              <td>比亞迪<span class="symbol">1211.HK</span></td>
+              <td class="price-up">105.1</td>
+              <td class="price-up">▲ +3.24%</td>
+              <td>31.7M</td>
+            </tr>
+<tr>
+              <td>理想汽車<span class="symbol">2015.HK</span></td>
+              <td class="price-up">74.2</td>
+              <td class="price-up">▲ +3.20%</td>
+              <td>16.2M</td>
+            </tr>
+</tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- US Market -->
+  <div class="section" style="animation-delay:0.16s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(59,130,246,0.12)">🇺🇸</div>
+      美股行情
+    </div>
+    <div class="card">
+      <p class="analysis-text">美股昨晚出現分化，納斯達克綜合指數微漲，而道瓊斯工業平均指數下跌。市場焦點集中在科技和能源板塊，部分個股表現出色。</p>
+      <div class="movers-grid">
+        <div class="mover-chip">
+              <span class="mover-name">亞馬遜</span>
+              <span class="price-up">+2.02%</span>
+              <span class="mover-reason">公司公佈最新財報，表現超出預期</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">英偉達</span>
+              <span class="price-up">+2.57%</span>
+              <span class="mover-reason">人工智能和雲計算需求增強</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">博通</span>
+              <span class="price-up">+4.69%</span>
+              <span class="mover-reason">公司公佈最新財報，表現超出預期</span>
+            </div>
+
+      </div>
+      <p class="analysis-text">科技和能源板塊表現較好，金融和消費板塊則相對穩定</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>指數</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+          <tbody><tr>
+              <td>S&P 500<span class="symbol">^GSPC</span></td>
+              <td class="price-down">6816.89</td>
+              <td class="price-down">▼ -0.11%</td>
+              <td>4.4B</td>
+            </tr>
+<tr>
+              <td>納斯達克綜合指數<span class="symbol">^IXIC</span></td>
+              <td class="price-up">22902.89</td>
+              <td class="price-up">▲ +0.35%</td>
+              <td>8.7B</td>
+            </tr>
+<tr>
+              <td>道瓊斯工業平均指數<span class="symbol">^DJI</span></td>
+              <td class="price-down">47916.57</td>
+              <td class="price-down">▼ -0.56%</td>
+              <td>477.1M</td>
+            </tr>
+<tr>
+              <td>VIX 恐慌指數<span class="symbol">^VIX</span></td>
+              <td class="price-down">19.23</td>
+              <td class="price-down">▼ -1.33%</td>
+              <td></td>
+            </tr>
+</tbody>
+        </table>
+      </div>
+      <details>
+        <summary style="color:#64748B;font-size:12px;cursor:pointer;margin:8px 0">展開全部美股 ▾</summary>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+            <tbody><tr>
+              <td>蘋果<span class="symbol">AAPL</span></td>
+              <td class="price-neutral">260.48</td>
+              <td class="price-neutral">─ -0.00%</td>
+              <td>31.3M</td>
+            </tr>
+<tr>
+              <td>微軟<span class="symbol">MSFT</span></td>
+              <td class="price-down">370.87</td>
+              <td class="price-down">▼ -0.59%</td>
+              <td>28.0M</td>
+            </tr>
+<tr>
+              <td>Alphabet<span class="symbol">GOOGL</span></td>
+              <td class="price-down">317.24</td>
+              <td class="price-down">▼ -0.39%</td>
+              <td>19.1M</td>
+            </tr>
+<tr>
+              <td>亞馬遜<span class="symbol">AMZN</span></td>
+              <td class="price-up">238.38</td>
+              <td class="price-up">▲ +2.02%</td>
+              <td>56.8M</td>
+            </tr>
+<tr>
+              <td>英偉達<span class="symbol">NVDA</span></td>
+              <td class="price-up">188.63</td>
+              <td class="price-up">▲ +2.57%</td>
+              <td>160.1M</td>
+            </tr>
+<tr>
+              <td>Meta<span class="symbol">META</span></td>
+              <td class="price-up">629.86</td>
+              <td class="price-up">▲ +0.23%</td>
+              <td>13.3M</td>
+            </tr>
+<tr>
+              <td>特斯拉<span class="symbol">TSLA</span></td>
+              <td class="price-up">348.95</td>
+              <td class="price-up">▲ +0.96%</td>
+              <td>51.0M</td>
+            </tr>
+<tr>
+              <td>台積電<span class="symbol">TSM</span></td>
+              <td class="price-up">370.6</td>
+              <td class="price-up">▲ +1.40%</td>
+              <td>13.1M</td>
+            </tr>
+<tr>
+              <td>AMD<span class="symbol">AMD</span></td>
+              <td class="price-up">245.04</td>
+              <td class="price-up">▲ +3.55%</td>
+              <td>36.4M</td>
+            </tr>
+<tr>
+              <td>博通<span class="symbol">AVGO</span></td>
+              <td class="price-up">371.55</td>
+              <td class="price-up">▲ +4.69%</td>
+              <td>29.9M</td>
+            </tr>
+<tr>
+              <td>高通<span class="symbol">QCOM</span></td>
+              <td class="price-up">128.06</td>
+              <td class="price-up">▲ +0.24%</td>
+              <td>8.4M</td>
+            </tr>
+<tr>
+              <td>美光<span class="symbol">MU</span></td>
+              <td class="price-down">420.59</td>
+              <td class="price-down">▼ -0.22%</td>
+              <td>36.3M</td>
+            </tr>
+<tr>
+              <td>摩根大通<span class="symbol">JPM</span></td>
+              <td class="price-down">309.87</td>
+              <td class="price-down">▼ -0.15%</td>
+              <td>6.1M</td>
+            </tr>
+<tr>
+              <td>高盛<span class="symbol">GS</span></td>
+              <td class="price-up">907.8</td>
+              <td class="price-up">▲ +0.45%</td>
+              <td>1.6M</td>
+            </tr>
+<tr>
+              <td>美國銀行<span class="symbol">BAC</span></td>
+              <td class="price-down">52.54</td>
+              <td class="price-down">▼ -0.32%</td>
+              <td>25.2M</td>
+            </tr>
+<tr>
+              <td>Coinbase<span class="symbol">COIN</span></td>
+              <td class="price-down">167.85</td>
+              <td class="price-down">▼ -0.69%</td>
+              <td>7.9M</td>
+            </tr>
+<tr>
+              <td>Palantir<span class="symbol">PLTR</span></td>
+              <td class="price-down">128.06</td>
+              <td class="price-down">▼ -1.86%</td>
+              <td>116.3M</td>
+            </tr>
+<tr>
+              <td>Salesforce<span class="symbol">CRM</span></td>
+              <td class="price-down">164.96</td>
+              <td class="price-down">▼ -3.45%</td>
+              <td>18.1M</td>
+            </tr>
+<tr>
+              <td>Netflix<span class="symbol">NFLX</span></td>
+              <td class="price-up">103.01</td>
+              <td class="price-up">▲ +0.94%</td>
+              <td>25.7M</td>
+            </tr>
+<tr>
+              <td>迪士尼<span class="symbol">DIS</span></td>
+              <td class="price-down">99.17</td>
+              <td class="price-down">▼ -0.62%</td>
+              <td>6.4M</td>
+            </tr>
+</tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Other Indicators -->
+  <div class="section" style="animation-delay:0.22s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(245,158,11,0.12)">🌐</div>
+      市場指標
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>指標</th><th>價格</th><th>漲跌</th><th>成交量</th></tr></thead>
+          <tbody><tr>
+              <td>黃金期貨<span class="symbol">GC=F</span></td>
+              <td class="price-down">4678.0</td>
+              <td class="price-down">▼ -1.76%</td>
+              <td>14K</td>
+            </tr>
+<tr>
+              <td>WTI 原油<span class="symbol">CL=F</span></td>
+              <td class="price-up">105.3</td>
+              <td class="price-up">▲ +9.04%</td>
+              <td>24K</td>
+            </tr>
+<tr>
+              <td>美元指數<span class="symbol">DX-Y.NYB</span></td>
+              <td class="price-up">99.13</td>
+              <td class="price-up">▲ +0.49%</td>
+              <td></td>
+            </tr>
+<tr>
+              <td>美國10年期國債收益率<span class="symbol">^TNX</span></td>
+              <td class="price-up">4.32</td>
+              <td class="price-up">▲ +0.70%</td>
+              <td></td>
+            </tr>
+<tr>
+              <td>比特幣<span class="symbol">BTC-USD</span></td>
+              <td class="price-down">70618.44</td>
+              <td class="price-down">▼ -3.33%</td>
+              <td>29.9B</td>
+            </tr>
+<tr>
+              <td>以太坊<span class="symbol">ETH-USD</span></td>
+              <td class="price-down">2187.91</td>
+              <td class="price-down">▼ -4.27%</td>
+              <td>15.3B</td>
+            </tr>
+</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key News -->
+  <div class="section" style="animation-delay:0.28s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(139,92,246,0.12)">📰</div>
+      重點新聞
+    </div>
+    <div class="news-card" style="animation-delay:0.10s">
+              <div class="card-header">
+                <span class="news-emoji">🌎</span>
+                <span class="news-tag">地緣政治</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
+              </div>
+              <h3>伊朗戰爭</h3>
+              <p>伊朗戰爭導致油價上漲，對全球經濟產生影響。美股和港股市場出現波動，投資者擔憂地緣政治風險。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.16s">
+              <div class="card-header">
+                <span class="news-emoji">📜</span>
+                <span class="news-tag">監管政策</span>
+                <span class="impact-badge" style="background:#64748B20;color:#64748B">中性</span>
+              </div>
+              <h3>中國監管政策</h3>
+              <p>中國政府出台新的監管政策，對科技和金融板塊產生影響。投資者關注政策的實施細節和對市場的影響。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.22s">
+              <div class="card-header">
+                <span class="news-emoji">📊</span>
+                <span class="news-tag">總經數據</span>
+                <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
+              </div>
+              <h3>美國經濟數據</h3>
+              <p>美國公佈最新的經濟數據，顯示經濟增長穩定。投資者關注數據的細節和對市場的影響。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.28s">
+              <div class="card-header">
+                <span class="news-emoji">📝</span>
+                <span class="news-tag">企業財報</span>
+                <span class="impact-badge" style="background:#64748B20;color:#64748B">中性</span>
+              </div>
+              <h3>企業財報季</h3>
+              <p>企業財報季即將開始，投資者關注公司的財報表現和對市場的影響。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.34s">
+              <div class="card-header">
+                <span class="news-emoji">🏦</span>
+                <span class="news-tag">央行動態</span>
+                <span class="impact-badge" style="background:#64748B20;color:#64748B">中性</span>
+              </div>
+              <h3>央行利率決策</h3>
+              <p>央行即將公佈利率決策，投資者關注決策的細節和對市場的影響。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.40s">
+              <div class="card-header">
+                <span class="news-emoji">📈</span>
+                <span class="news-tag">行業趨勢</span>
+                <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
+              </div>
+              <h3>新能源汽車</h3>
+              <p>新能源汽車板塊走強，投資者關注板塊的發展前景和對市場的影響。</p>
+            </div>
+
+  </div>
+
+  <!-- Macro -->
+  <div class="section" style="animation-delay:0.34s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(16,185,129,0.12)">📊</div>
+      總經數據
+    </div>
+    <div class="card">
+      <p class="analysis-text">重要總經數據摘要：美國經濟數據穩定，中國監管政策對市場產生影響。</p>
+      <p class="analysis-text" style="color:#F59E0B">📅 近期需關注的經濟事件/數據公佈：企業財報季、央行利率決策</p>
+    </div>
+  </div>
+
+  <!-- Risk Alerts -->
+  <div class="section" style="animation-delay:0.40s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(239,68,68,0.12)">🚨</div>
+      風險提示
+    </div>
+    <div class="alert-card">
+      <ul>
+        <li>地緣政治風險</li>
+<li>監管政策風險</li>
+<li>經濟衰退風險</li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- Keywords -->
+  <div class="section" style="animation-delay:0.46s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(139,92,246,0.12)">#️⃣</div>
+      熱門關鍵字
+    </div>
+    <div class="keywords">
+      <span class="keyword">伊朗戰爭</span>
+<span class="keyword">中國監管政策</span>
+<span class="keyword">美國經濟數據</span>
+<span class="keyword">企業財報季</span>
+<span class="keyword">央行利率決策</span>
+<span class="keyword">新能源汽車</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>港美股日報 · 自動生成於 2026-04-13 07:54 HKT</p>
+    <p style="margin-top:4px">數據來源：Yahoo Finance · AAStocks · WSJ · CNBC · MarketWatch · ForexLive</p>
+    <p style="margin-top:4px;color:#475569">⚠️ 本日報僅供參考，不構成任何投資建議</p>
+  </div>
+
+</div>
+</body>
+</html>
