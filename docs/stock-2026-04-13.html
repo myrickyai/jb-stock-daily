@@ -41,6 +41,10 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
 .price-up{color:#10B981;font-weight:600}
 .price-down{color:#EF4444;font-weight:600}
 .price-neutral{color:#94A3B8}
+.rank-num{color:#F59E0B;font-weight:700;font-size:14px;width:30px}
+.ipo-code{color:#3B82F6;font-weight:600}
+.ipo-link{color:#F59E0B;text-decoration:none;font-size:12px}
+.ipo-link:hover{text-decoration:underline}
 
 /* Cards */
 .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px 24px;margin-bottom:12px;transition:all 0.2s ease}
@@ -48,7 +52,7 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
 .card h3{font-size:14.5px;font-weight:600;margin-bottom:8px}
 .card p{font-size:13.5px;color:#94A3B8;line-height:1.75}
 
-/* News Cards */
+/* News Cards (AI analysis) */
 .news-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 22px;margin-bottom:10px;transition:all 0.2s ease;animation:fadeUp 0.5s ease both}
 .news-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(245,158,11,0.2);transform:translateY(-2px)}
 .card-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -57,6 +61,17 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
 .impact-badge{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:10px}
 .news-card h3{font-size:14px;font-weight:600;margin-bottom:6px}
 .news-card p{font-size:13px;color:#94A3B8;line-height:1.7}
+
+/* News Feed (raw articles with links) */
+.feed-item{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:8px;transition:all 0.2s ease;animation:fadeUp 0.4s ease both}
+.feed-item:hover{background:rgba(255,255,255,0.04);border-color:rgba(59,130,246,0.15);transform:translateY(-1px)}
+.feed-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.feed-source{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.feed-date{font-size:10.5px;color:#475569}
+.feed-title{font-size:13.5px;font-weight:600;color:#E3F2FD;line-height:1.5;margin-bottom:4px}
+.feed-summary{font-size:12px;color:#64748B;line-height:1.6;margin-bottom:6px}
+.news-link{display:inline-block;color:#3B82F6;font-size:12px;text-decoration:none;font-weight:500;transition:color 0.2s}
+.news-link:hover{color:#60A5FA;text-decoration:underline}
 
 /* Movers */
 .movers-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
@@ -77,6 +92,15 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
 
 /* Analysis text */
 .analysis-text{font-size:13.5px;color:#94A3B8;line-height:1.8;margin-bottom:12px}
+
+/* Tabs for gainers/losers */
+.tab-container{margin-bottom:12px}
+.tab-buttons{display:flex;gap:0;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.tab-btn{padding:8px 20px;font-size:13px;font-weight:600;color:#64748B;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s}
+.tab-btn.active{color:#F59E0B;border-bottom-color:#F59E0B}
+.tab-btn:hover{color:#94A3B8}
+.tab-content{display:none}
+.tab-content.active{display:block}
 
 /* Footer */
 .footer{text-align:center;padding:40px 0 20px;color:#475569;font-size:11.5px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
@@ -117,7 +141,7 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
   <!-- Core Summary -->
   <div class="summary-card">
     <h2>📋 核心摘要</h2>
-    <p>港美股今日走勢受多重因素影響，包括地緣政治、監管政策和企業財報。港股恒生指數微跌，美股納斯達克綜合指數小漲。中國的AI新動向和美國的經濟數據公佈對市場產生了影響。</p>
+    <p>今日港美股走勢以科技股領跌為主，中國科技公司DeepSeek的新AI模型對美股科技股產生了重大影響。美股三大指數中，道瓊斯工業平均指數微跌，納斯達克綜合指數和S&P 500指數小漲。港股方面，恆生指數下跌0.9%，主要由科技股和地產股拖累。</p>
   </div>
 
   <!-- HK Market -->
@@ -127,26 +151,36 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
       港股行情
     </div>
     <div class="card">
-      <p class="analysis-text">港股今日整體表現偏弱，恒生指數收跌0.90%。科技股和地產股領跌，騰訊控股和新鴻基地產分別下跌2.87%和2.09%。</p>
+      <p class="analysis-text">港股今日整體表現偏弱，主要由科技股和地產股拖累。恆生指數收報25660.85點，跌0.9%。市場對中國科技公司DeepSeek的新AI模型持謹慎態度，對美股科技股產生了重大影響。</p>
       <div class="movers-grid">
         <div class="mover-chip">
-              <span class="mover-name">蔚來</span>
-              <span class="price-up">+7.47%</span>
-              <span class="mover-reason">電動車板塊走強</span>
+              <span class="mover-name">騰訊控股</span>
+              <span class="price-down">-2.87%</span>
+              <span class="mover-reason">受DeepSeek新AI模型影響</span>
             </div>
 <div class="mover-chip">
-              <span class="mover-name">比亞迪</span>
-              <span class="price-up">+4.95%</span>
-              <span class="mover-reason">公司業績優於預期</span>
+              <span class="mover-name">阿里巴巴</span>
+              <span class="price-down">-1.83%</span>
+              <span class="mover-reason">市場對中國科技公司的新AI模型持謹慎態度</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">美團</span>
+              <span class="price-down">-1.31%</span>
+              <span class="mover-reason">科技股領跌</span>
             </div>
 <div class="mover-chip">
               <span class="mover-name">京東集團</span>
               <span class="price-up">+0.81%</span>
-              <span class="mover-reason">電商板塊走穩</span>
+              <span class="mover-reason">電子商務股相對抗跌</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">比亞迪</span>
+              <span class="price-up">+4.95%</span>
+              <span class="mover-reason">新能源汽車股領漲</span>
             </div>
 
       </div>
-      <p class="analysis-text">科技和電動車板塊走強，地產和金融板塊走弱</p>
+      <p class="analysis-text">科技股和地產股領跌，電子商務股和新能源汽車股相對抗跌。市場對中國科技公司的新AI模型持謹慎態度，對美股科技股產生了重大影響。</p>
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>指數</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
@@ -284,10 +318,482 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
               <td class="price-down">▼ -0.67%</td>
               <td>7.8M</td>
             </tr>
+<tr>
+              <td>蔚來<span class="symbol">9866.HK</span></td>
+              <td class="price-up">52.4</td>
+              <td class="price-up">▲ +7.47%</td>
+              <td>6.5M</td>
+            </tr>
+<tr>
+              <td>小鵬汽車<span class="symbol">9868.HK</span></td>
+              <td class="price-up">67.6</td>
+              <td class="price-up">▲ +0.90%</td>
+              <td>9.7M</td>
+            </tr>
+<tr>
+              <td>中國移動<span class="symbol">0941.HK</span></td>
+              <td class="price-neutral">81.1</td>
+              <td class="price-neutral">─ +0.00%</td>
+              <td>11.9M</td>
+            </tr>
+<tr>
+              <td>中國海洋石油<span class="symbol">0883.HK</span></td>
+              <td class="price-up">26.64</td>
+              <td class="price-up">▲ +0.45%</td>
+              <td>91.3M</td>
+            </tr>
+<tr>
+              <td>中國石油天然氣<span class="symbol">0857.HK</span></td>
+              <td class="price-up">10.97</td>
+              <td class="price-up">▲ +1.57%</td>
+              <td>96.2M</td>
+            </tr>
+<tr>
+              <td>舜宇光學科技<span class="symbol">2382.HK</span></td>
+              <td class="price-down">62.1</td>
+              <td class="price-down">▼ -1.11%</td>
+              <td>7.8M</td>
+            </tr>
+<tr>
+              <td>快手<span class="symbol">1024.HK</span></td>
+              <td class="price-down">44.54</td>
+              <td class="price-down">▼ -1.33%</td>
+              <td>24.3M</td>
+            </tr>
+<tr>
+              <td>眾安在線<span class="symbol">6060.HK</span></td>
+              <td class="price-down">12.71</td>
+              <td class="price-down">▼ -6.54%</td>
+              <td>25.6M</td>
+            </tr>
+<tr>
+              <td>藥明生物<span class="symbol">2269.HK</span></td>
+              <td class="price-down">35.28</td>
+              <td class="price-down">▼ -1.73%</td>
+              <td>14.7M</td>
+            </tr>
+<tr>
+              <td>新東方<span class="symbol">9901.HK</span></td>
+              <td class="price-down">44.3</td>
+              <td class="price-down">▼ -2.55%</td>
+              <td>4.0M</td>
+            </tr>
+<tr>
+              <td>安踏體育<span class="symbol">2020.HK</span></td>
+              <td class="price-down">82.65</td>
+              <td class="price-down">▼ -1.49%</td>
+              <td>7.3M</td>
+            </tr>
+<tr>
+              <td>銀河娛樂<span class="symbol">0027.HK</span></td>
+              <td class="price-down">34.38</td>
+              <td class="price-down">▼ -2.22%</td>
+              <td>18.7M</td>
+            </tr>
+<tr>
+              <td>金沙中國<span class="symbol">1928.HK</span></td>
+              <td class="price-down">17.06</td>
+              <td class="price-down">▼ -0.87%</td>
+              <td>8.2M</td>
+            </tr>
+<tr>
+              <td>吉利汽車<span class="symbol">0175.HK</span></td>
+              <td class="price-down">24.94</td>
+              <td class="price-down">▼ -0.16%</td>
+              <td>64.2M</td>
+            </tr>
+<tr>
+              <td>長城汽車<span class="symbol">2333.HK</span></td>
+              <td class="price-down">13.74</td>
+              <td class="price-down">▼ -0.07%</td>
+              <td>22.0M</td>
+            </tr>
 </tbody>
           </table>
         </div>
       </details>
+    </div>
+  </div>
+
+  <!-- HK Top Gainers / Losers -->
+  <div class="section" style="animation-delay:0.13s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(16,185,129,0.12)">📈</div>
+      港股升跌排行榜
+    </div>
+    <div class="card">
+      <div class="tab-container">
+        <div class="tab-buttons">
+          <button class="tab-btn active" onclick="switchTab(this,'gainers')">🟢 升幅榜</button>
+          <button class="tab-btn" onclick="switchTab(this,'losers')">🔴 跌幅榜</button>
+        </div>
+        <div class="tab-content active" id="tab-gainers">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+              <tbody><tr>
+              <td class="rank-num">1</td>
+              <td>蔚來<span class="symbol">9866.HK</span></td>
+              <td class="price-up">52.4</td>
+              <td class="price-up">▲ +7.47%</td>
+              <td>6.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">2</td>
+              <td>比亞迪<span class="symbol">1211.HK</span></td>
+              <td class="price-up">110.3</td>
+              <td class="price-up">▲ +4.95%</td>
+              <td>50.1M</td>
+            </tr>
+<tr>
+              <td class="rank-num">3</td>
+              <td>中國石油天然氣<span class="symbol">0857.HK</span></td>
+              <td class="price-up">10.97</td>
+              <td class="price-up">▲ +1.57%</td>
+              <td>96.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">4</td>
+              <td>小鵬汽車<span class="symbol">9868.HK</span></td>
+              <td class="price-up">67.6</td>
+              <td class="price-up">▲ +0.90%</td>
+              <td>9.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">5</td>
+              <td>京東集團<span class="symbol">9618.HK</span></td>
+              <td class="price-up">112.3</td>
+              <td class="price-up">▲ +0.81%</td>
+              <td>6.6M</td>
+            </tr>
+<tr>
+              <td class="rank-num">6</td>
+              <td>中國海外發展<span class="symbol">0688.HK</span></td>
+              <td class="price-up">12.01</td>
+              <td class="price-up">▲ +0.67%</td>
+              <td>15.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">7</td>
+              <td>中國海洋石油<span class="symbol">0883.HK</span></td>
+              <td class="price-up">26.64</td>
+              <td class="price-up">▲ +0.45%</td>
+              <td>91.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">8</td>
+              <td>比亞迪電子<span class="symbol">0285.HK</span></td>
+              <td class="price-up">28.16</td>
+              <td class="price-up">▲ +0.21%</td>
+              <td>7.0M</td>
+            </tr>
+<tr>
+              <td class="rank-num">9</td>
+              <td>華潤置地<span class="symbol">1109.HK</span></td>
+              <td class="price-up">29.48</td>
+              <td class="price-up">▲ +0.20%</td>
+              <td>10.9M</td>
+            </tr>
+<tr>
+              <td class="rank-num">10</td>
+              <td>工商銀行<span class="symbol">1398.HK</span></td>
+              <td class="price-up">6.98</td>
+              <td class="price-up">▲ +0.14%</td>
+              <td>106.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">11</td>
+              <td>中國銀行<span class="symbol">3988.HK</span></td>
+              <td class="price-neutral">5.04</td>
+              <td class="price-neutral">─ +0.00%</td>
+              <td>153.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">12</td>
+              <td>中國移動<span class="symbol">0941.HK</span></td>
+              <td class="price-neutral">81.1</td>
+              <td class="price-neutral">─ +0.00%</td>
+              <td>11.9M</td>
+            </tr>
+<tr>
+              <td class="rank-num">13</td>
+              <td>長城汽車<span class="symbol">2333.HK</span></td>
+              <td class="price-down">13.74</td>
+              <td class="price-down">▼ -0.07%</td>
+              <td>22.0M</td>
+            </tr>
+<tr>
+              <td class="rank-num">14</td>
+              <td>吉利汽車<span class="symbol">0175.HK</span></td>
+              <td class="price-down">24.94</td>
+              <td class="price-down">▼ -0.16%</td>
+              <td>64.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">15</td>
+              <td>商湯集團<span class="symbol">0020.HK</span></td>
+              <td class="price-down">2.0</td>
+              <td class="price-down">▼ -0.50%</td>
+              <td>227.9M</td>
+            </tr>
+<tr>
+              <td class="rank-num">16</td>
+              <td>匯豐控股<span class="symbol">0005.HK</span></td>
+              <td class="price-down">138.8</td>
+              <td class="price-down">▼ -0.64%</td>
+              <td>15.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">17</td>
+              <td>香港交易所<span class="symbol">0388.HK</span></td>
+              <td class="price-down">405.8</td>
+              <td class="price-down">▼ -0.64%</td>
+              <td>3.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">18</td>
+              <td>理想汽車<span class="symbol">2015.HK</span></td>
+              <td class="price-down">73.7</td>
+              <td class="price-down">▼ -0.67%</td>
+              <td>7.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">19</td>
+              <td>小米集團<span class="symbol">1810.HK</span></td>
+              <td class="price-down">30.66</td>
+              <td class="price-down">▼ -0.78%</td>
+              <td>118.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">20</td>
+              <td>金沙中國<span class="symbol">1928.HK</span></td>
+              <td class="price-down">17.06</td>
+              <td class="price-down">▼ -0.87%</td>
+              <td>8.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">21</td>
+              <td>百度集團<span class="symbol">9888.HK</span></td>
+              <td class="price-down">107.4</td>
+              <td class="price-down">▼ -1.10%</td>
+              <td>12.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">22</td>
+              <td>舜宇光學科技<span class="symbol">2382.HK</span></td>
+              <td class="price-down">62.1</td>
+              <td class="price-down">▼ -1.11%</td>
+              <td>7.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">23</td>
+              <td>美團<span class="symbol">3690.HK</span></td>
+              <td class="price-down">86.45</td>
+              <td class="price-down">▼ -1.31%</td>
+              <td>23.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">24</td>
+              <td>快手<span class="symbol">1024.HK</span></td>
+              <td class="price-down">44.54</td>
+              <td class="price-down">▼ -1.33%</td>
+              <td>24.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">25</td>
+              <td>安踏體育<span class="symbol">2020.HK</span></td>
+              <td class="price-down">82.65</td>
+              <td class="price-down">▼ -1.49%</td>
+              <td>7.3M</td>
+            </tr>
+</tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-losers">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+              <tbody><tr>
+              <td class="rank-num">1</td>
+              <td>眾安在線<span class="symbol">6060.HK</span></td>
+              <td class="price-down">12.71</td>
+              <td class="price-down">▼ -6.54%</td>
+              <td>25.6M</td>
+            </tr>
+<tr>
+              <td class="rank-num">2</td>
+              <td>騰訊控股<span class="symbol">0700.HK</span></td>
+              <td class="price-down">490.0</td>
+              <td class="price-down">▼ -2.87%</td>
+              <td>21.1M</td>
+            </tr>
+<tr>
+              <td class="rank-num">3</td>
+              <td>新東方<span class="symbol">9901.HK</span></td>
+              <td class="price-down">44.3</td>
+              <td class="price-down">▼ -2.55%</td>
+              <td>4.0M</td>
+            </tr>
+<tr>
+              <td class="rank-num">4</td>
+              <td>銀河娛樂<span class="symbol">0027.HK</span></td>
+              <td class="price-down">34.38</td>
+              <td class="price-down">▼ -2.22%</td>
+              <td>18.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">5</td>
+              <td>新鴻基地產<span class="symbol">0016.HK</span></td>
+              <td class="price-down">135.8</td>
+              <td class="price-down">▼ -2.09%</td>
+              <td>2.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">6</td>
+              <td>阿里巴巴<span class="symbol">9988.HK</span></td>
+              <td class="price-down">123.2</td>
+              <td class="price-down">▼ -1.83%</td>
+              <td>51.1M</td>
+            </tr>
+<tr>
+              <td class="rank-num">7</td>
+              <td>中國平安<span class="symbol">2318.HK</span></td>
+              <td class="price-down">61.65</td>
+              <td class="price-down">▼ -1.75%</td>
+              <td>24.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">8</td>
+              <td>友邦保險<span class="symbol">1299.HK</span></td>
+              <td class="price-down">87.4</td>
+              <td class="price-down">▼ -1.74%</td>
+              <td>15.4M</td>
+            </tr>
+<tr>
+              <td class="rank-num">9</td>
+              <td>藥明生物<span class="symbol">2269.HK</span></td>
+              <td class="price-down">35.28</td>
+              <td class="price-down">▼ -1.73%</td>
+              <td>14.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">10</td>
+              <td>網易<span class="symbol">9999.HK</span></td>
+              <td class="price-down">175.7</td>
+              <td class="price-down">▼ -1.51%</td>
+              <td>3.9M</td>
+            </tr>
+<tr>
+              <td class="rank-num">11</td>
+              <td>安踏體育<span class="symbol">2020.HK</span></td>
+              <td class="price-down">82.65</td>
+              <td class="price-down">▼ -1.49%</td>
+              <td>7.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">12</td>
+              <td>快手<span class="symbol">1024.HK</span></td>
+              <td class="price-down">44.54</td>
+              <td class="price-down">▼ -1.33%</td>
+              <td>24.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">13</td>
+              <td>美團<span class="symbol">3690.HK</span></td>
+              <td class="price-down">86.45</td>
+              <td class="price-down">▼ -1.31%</td>
+              <td>23.7M</td>
+            </tr>
+<tr>
+              <td class="rank-num">14</td>
+              <td>舜宇光學科技<span class="symbol">2382.HK</span></td>
+              <td class="price-down">62.1</td>
+              <td class="price-down">▼ -1.11%</td>
+              <td>7.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">15</td>
+              <td>百度集團<span class="symbol">9888.HK</span></td>
+              <td class="price-down">107.4</td>
+              <td class="price-down">▼ -1.10%</td>
+              <td>12.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">16</td>
+              <td>金沙中國<span class="symbol">1928.HK</span></td>
+              <td class="price-down">17.06</td>
+              <td class="price-down">▼ -0.87%</td>
+              <td>8.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">17</td>
+              <td>小米集團<span class="symbol">1810.HK</span></td>
+              <td class="price-down">30.66</td>
+              <td class="price-down">▼ -0.78%</td>
+              <td>118.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">18</td>
+              <td>理想汽車<span class="symbol">2015.HK</span></td>
+              <td class="price-down">73.7</td>
+              <td class="price-down">▼ -0.67%</td>
+              <td>7.8M</td>
+            </tr>
+<tr>
+              <td class="rank-num">19</td>
+              <td>匯豐控股<span class="symbol">0005.HK</span></td>
+              <td class="price-down">138.8</td>
+              <td class="price-down">▼ -0.64%</td>
+              <td>15.3M</td>
+            </tr>
+<tr>
+              <td class="rank-num">20</td>
+              <td>香港交易所<span class="symbol">0388.HK</span></td>
+              <td class="price-down">405.8</td>
+              <td class="price-down">▼ -0.64%</td>
+              <td>3.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">21</td>
+              <td>商湯集團<span class="symbol">0020.HK</span></td>
+              <td class="price-down">2.0</td>
+              <td class="price-down">▼ -0.50%</td>
+              <td>227.9M</td>
+            </tr>
+<tr>
+              <td class="rank-num">22</td>
+              <td>吉利汽車<span class="symbol">0175.HK</span></td>
+              <td class="price-down">24.94</td>
+              <td class="price-down">▼ -0.16%</td>
+              <td>64.2M</td>
+            </tr>
+<tr>
+              <td class="rank-num">23</td>
+              <td>長城汽車<span class="symbol">2333.HK</span></td>
+              <td class="price-down">13.74</td>
+              <td class="price-down">▼ -0.07%</td>
+              <td>22.0M</td>
+            </tr>
+<tr>
+              <td class="rank-num">24</td>
+              <td>中國銀行<span class="symbol">3988.HK</span></td>
+              <td class="price-neutral">5.04</td>
+              <td class="price-neutral">─ +0.00%</td>
+              <td>153.5M</td>
+            </tr>
+<tr>
+              <td class="rank-num">25</td>
+              <td>中國移動<span class="symbol">0941.HK</span></td>
+              <td class="price-neutral">81.1</td>
+              <td class="price-neutral">─ +0.00%</td>
+              <td>11.9M</td>
+            </tr>
+</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -298,51 +804,61 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
       美股行情
     </div>
     <div class="card">
-      <p class="analysis-text">美股昨晚納斯達克綜合指數小漲0.35%，道瓊斯工業平均指數收跌0.56%。科技股領漲，亞馬遜和英偉達分別上漲2.02%和2.57%。</p>
+      <p class="analysis-text">美股昨晚表現以科技股領跌為主，納斯達克綜合指數和S&P 500指數小漲，道瓊斯工業平均指數微跌。市場對中國科技公司DeepSeek的新AI模型持謹慎態度，對美股科技股產生了重大影響。</p>
       <div class="movers-grid">
         <div class="mover-chip">
-              <span class="mover-name">博通</span>
-              <span class="price-up">+4.69%</span>
-              <span class="mover-reason">公司業績優於預期</span>
+              <span class="mover-name">蘋果</span>
+              <span class="price-down">-1.17%</span>
+              <span class="mover-reason">科技股領跌</span>
             </div>
 <div class="mover-chip">
-              <span class="mover-name">AMD</span>
-              <span class="price-up">+3.55%</span>
-              <span class="mover-reason">半導體板塊走強</span>
+              <span class="mover-name">微軟</span>
+              <span class="price-up">+1.47%</span>
+              <span class="mover-reason">雲計算股領漲</span>
             </div>
 <div class="mover-chip">
               <span class="mover-name">英偉達</span>
-              <span class="price-up">+2.57%</span>
-              <span class="mover-reason">AI板塊走強</span>
+              <span class="price-down">-0.20%</span>
+              <span class="mover-reason">AI相關股受影響</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">特斯拉</span>
+              <span class="price-up">+0.50%</span>
+              <span class="mover-reason">新能源汽車股領漲</span>
+            </div>
+<div class="mover-chip">
+              <span class="mover-name">Salesforce</span>
+              <span class="price-up">+3.61%</span>
+              <span class="mover-reason">雲計算股領漲</span>
             </div>
 
       </div>
-      <p class="analysis-text">科技和半導體板塊走強，能源和金融板塊走弱</p>
+      <p class="analysis-text">科技股領跌，雲計算股和新能源汽車股領漲。市場對中國科技公司的新AI模型持謹慎態度，對美股科技股產生了重大影響。</p>
       <div class="table-wrap">
         <table class="data-table">
           <thead><tr><th>指數</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
           <tbody><tr>
               <td>S&P 500<span class="symbol">^GSPC</span></td>
-              <td class="price-down">6816.89</td>
-              <td class="price-down">▼ -0.11%</td>
-              <td>4.4B</td>
+              <td class="price-up">6817.89</td>
+              <td class="price-up">▲ +0.01%</td>
+              <td>528.7M</td>
             </tr>
 <tr>
               <td>納斯達克綜合指數<span class="symbol">^IXIC</span></td>
-              <td class="price-up">22902.89</td>
-              <td class="price-up">▲ +0.35%</td>
-              <td>8.7B</td>
+              <td class="price-up">22937.93</td>
+              <td class="price-up">▲ +0.15%</td>
+              <td>2.1B</td>
             </tr>
 <tr>
               <td>道瓊斯工業平均指數<span class="symbol">^DJI</span></td>
-              <td class="price-down">47916.57</td>
-              <td class="price-down">▼ -0.56%</td>
-              <td>477.1M</td>
+              <td class="price-down">47714.85</td>
+              <td class="price-down">▼ -0.42%</td>
+              <td>101.7M</td>
             </tr>
 <tr>
               <td>VIX 恐慌指數<span class="symbol">^VIX</span></td>
-              <td class="price-up">21.3</td>
-              <td class="price-up">▲ +10.76%</td>
+              <td class="price-up">20.0</td>
+              <td class="price-up">▲ +4.00%</td>
               <td></td>
             </tr>
 </tbody>
@@ -355,123 +871,141 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
             <thead><tr><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
             <tbody><tr>
               <td>蘋果<span class="symbol">AAPL</span></td>
-              <td class="price-neutral">260.48</td>
-              <td class="price-neutral">─ -0.00%</td>
-              <td>31.3M</td>
+              <td class="price-down">257.43</td>
+              <td class="price-down">▼ -1.17%</td>
+              <td>6.6M</td>
             </tr>
 <tr>
               <td>微軟<span class="symbol">MSFT</span></td>
-              <td class="price-down">370.87</td>
-              <td class="price-down">▼ -0.59%</td>
-              <td>28.0M</td>
+              <td class="price-up">376.31</td>
+              <td class="price-up">▲ +1.47%</td>
+              <td>8.9M</td>
             </tr>
 <tr>
               <td>Alphabet<span class="symbol">GOOGL</span></td>
-              <td class="price-down">317.24</td>
-              <td class="price-down">▼ -0.39%</td>
-              <td>19.1M</td>
+              <td class="price-up">318.14</td>
+              <td class="price-up">▲ +0.28%</td>
+              <td>5.1M</td>
             </tr>
 <tr>
               <td>亞馬遜<span class="symbol">AMZN</span></td>
-              <td class="price-up">238.38</td>
-              <td class="price-up">▲ +2.02%</td>
-              <td>56.8M</td>
+              <td class="price-down">236.72</td>
+              <td class="price-down">▼ -0.70%</td>
+              <td>10.8M</td>
             </tr>
 <tr>
               <td>英偉達<span class="symbol">NVDA</span></td>
-              <td class="price-up">188.63</td>
-              <td class="price-up">▲ +2.57%</td>
-              <td>160.1M</td>
+              <td class="price-down">188.26</td>
+              <td class="price-down">▼ -0.20%</td>
+              <td>37.7M</td>
             </tr>
 <tr>
               <td>Meta<span class="symbol">META</span></td>
-              <td class="price-up">629.86</td>
-              <td class="price-up">▲ +0.23%</td>
-              <td>13.3M</td>
+              <td class="price-down">626.8</td>
+              <td class="price-down">▼ -0.49%</td>
+              <td>2.7M</td>
             </tr>
 <tr>
               <td>特斯拉<span class="symbol">TSLA</span></td>
-              <td class="price-up">348.95</td>
-              <td class="price-up">▲ +0.96%</td>
-              <td>51.0M</td>
+              <td class="price-up">350.7</td>
+              <td class="price-up">▲ +0.50%</td>
+              <td>17.4M</td>
             </tr>
 <tr>
               <td>台積電<span class="symbol">TSM</span></td>
-              <td class="price-up">370.6</td>
-              <td class="price-up">▲ +1.40%</td>
-              <td>13.1M</td>
+              <td class="price-down">368.92</td>
+              <td class="price-down">▼ -0.45%</td>
+              <td>2.7M</td>
             </tr>
 <tr>
               <td>AMD<span class="symbol">AMD</span></td>
-              <td class="price-up">245.04</td>
-              <td class="price-up">▲ +3.55%</td>
-              <td>36.4M</td>
+              <td class="price-down">243.14</td>
+              <td class="price-down">▼ -0.78%</td>
+              <td>6.9M</td>
             </tr>
 <tr>
               <td>博通<span class="symbol">AVGO</span></td>
-              <td class="price-up">371.55</td>
-              <td class="price-up">▲ +4.69%</td>
-              <td>29.9M</td>
+              <td class="price-up">373.33</td>
+              <td class="price-up">▲ +0.48%</td>
+              <td>5.2M</td>
             </tr>
 <tr>
               <td>高通<span class="symbol">QCOM</span></td>
-              <td class="price-up">128.06</td>
-              <td class="price-up">▲ +0.24%</td>
-              <td>8.4M</td>
+              <td class="price-down">127.93</td>
+              <td class="price-down">▼ -0.10%</td>
+              <td>995K</td>
             </tr>
 <tr>
               <td>美光<span class="symbol">MU</span></td>
-              <td class="price-down">420.59</td>
-              <td class="price-down">▼ -0.22%</td>
-              <td>36.3M</td>
+              <td class="price-down">412.35</td>
+              <td class="price-down">▼ -1.96%</td>
+              <td>10.3M</td>
             </tr>
 <tr>
               <td>摩根大通<span class="symbol">JPM</span></td>
-              <td class="price-down">309.87</td>
-              <td class="price-down">▼ -0.15%</td>
-              <td>6.1M</td>
+              <td class="price-down">309.2</td>
+              <td class="price-down">▼ -0.22%</td>
+              <td>1.3M</td>
             </tr>
 <tr>
               <td>高盛<span class="symbol">GS</span></td>
-              <td class="price-up">907.8</td>
-              <td class="price-up">▲ +0.45%</td>
-              <td>1.6M</td>
+              <td class="price-down">877.98</td>
+              <td class="price-down">▼ -3.28%</td>
+              <td>1.7M</td>
             </tr>
 <tr>
               <td>美國銀行<span class="symbol">BAC</span></td>
-              <td class="price-down">52.54</td>
-              <td class="price-down">▼ -0.32%</td>
-              <td>25.2M</td>
+              <td class="price-down">52.47</td>
+              <td class="price-down">▼ -0.13%</td>
+              <td>4.8M</td>
             </tr>
 <tr>
               <td>Coinbase<span class="symbol">COIN</span></td>
-              <td class="price-down">167.85</td>
-              <td class="price-down">▼ -0.69%</td>
-              <td>7.9M</td>
+              <td class="price-up">172.55</td>
+              <td class="price-up">▲ +2.80%</td>
+              <td>2.8M</td>
             </tr>
 <tr>
               <td>Palantir<span class="symbol">PLTR</span></td>
-              <td class="price-down">128.06</td>
-              <td class="price-down">▼ -1.86%</td>
-              <td>116.3M</td>
+              <td class="price-up">131.54</td>
+              <td class="price-up">▲ +2.72%</td>
+              <td>22.5M</td>
             </tr>
 <tr>
               <td>Salesforce<span class="symbol">CRM</span></td>
-              <td class="price-down">164.96</td>
-              <td class="price-down">▼ -3.45%</td>
-              <td>18.1M</td>
+              <td class="price-up">170.92</td>
+              <td class="price-up">▲ +3.61%</td>
+              <td>3.6M</td>
             </tr>
 <tr>
               <td>Netflix<span class="symbol">NFLX</span></td>
-              <td class="price-up">103.01</td>
-              <td class="price-up">▲ +0.94%</td>
-              <td>25.7M</td>
+              <td class="price-down">102.89</td>
+              <td class="price-down">▼ -0.12%</td>
+              <td>6.6M</td>
             </tr>
 <tr>
               <td>迪士尼<span class="symbol">DIS</span></td>
-              <td class="price-down">99.17</td>
-              <td class="price-down">▼ -0.62%</td>
-              <td>6.4M</td>
+              <td class="price-up">99.59</td>
+              <td class="price-up">▲ +0.42%</td>
+              <td>904K</td>
+            </tr>
+<tr>
+              <td>波音<span class="symbol">BA</span></td>
+              <td class="price-up">217.82</td>
+              <td class="price-up">▲ +0.09%</td>
+              <td>714K</td>
+            </tr>
+<tr>
+              <td>埃克森美孚<span class="symbol">XOM</span></td>
+              <td class="price-up">152.54</td>
+              <td class="price-up">▲ +0.02%</td>
+              <td>4.5M</td>
+            </tr>
+<tr>
+              <td>聯合健康<span class="symbol">UNH</span></td>
+              <td class="price-up">306.45</td>
+              <td class="price-up">▲ +0.70%</td>
+              <td>1.1M</td>
             </tr>
 </tbody>
           </table>
@@ -492,39 +1026,39 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
           <thead><tr><th>指標</th><th>價格</th><th>漲跌</th><th>成交量</th></tr></thead>
           <tbody><tr>
               <td>黃金期貨<span class="symbol">GC=F</span></td>
-              <td class="price-down">4735.0</td>
-              <td class="price-down">▼ -0.56%</td>
-              <td>52K</td>
+              <td class="price-down">4737.1</td>
+              <td class="price-down">▼ -0.52%</td>
+              <td>81K</td>
             </tr>
 <tr>
               <td>WTI 原油<span class="symbol">CL=F</span></td>
-              <td class="price-up">104.36</td>
-              <td class="price-up">▲ +8.07%</td>
-              <td>72K</td>
+              <td class="price-up">101.72</td>
+              <td class="price-up">▲ +5.33%</td>
+              <td>143K</td>
             </tr>
 <tr>
               <td>美元指數<span class="symbol">DX-Y.NYB</span></td>
-              <td class="price-up">98.99</td>
-              <td class="price-up">▲ +0.34%</td>
+              <td class="price-up">98.76</td>
+              <td class="price-up">▲ +0.11%</td>
               <td></td>
             </tr>
 <tr>
               <td>美國10年期國債收益率<span class="symbol">^TNX</span></td>
-              <td class="price-up">4.32</td>
-              <td class="price-up">▲ +0.70%</td>
+              <td class="price-neutral">4.32</td>
+              <td class="price-neutral">─ +0.00%</td>
               <td></td>
             </tr>
 <tr>
               <td>比特幣<span class="symbol">BTC-USD</span></td>
-              <td class="price-up">70824.66</td>
-              <td class="price-up">▲ +0.10%</td>
-              <td>27.7B</td>
+              <td class="price-up">71711.78</td>
+              <td class="price-up">▲ +1.35%</td>
+              <td>31.7B</td>
             </tr>
 <tr>
               <td>以太坊<span class="symbol">ETH-USD</span></td>
-              <td class="price-down">2184.9</td>
-              <td class="price-down">▼ -0.33%</td>
-              <td>12.9B</td>
+              <td class="price-up">2214.92</td>
+              <td class="price-up">▲ +1.04%</td>
+              <td>14.2B</td>
             </tr>
 </tbody>
         </table>
@@ -532,29 +1066,29 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
     </div>
   </div>
 
-  <!-- Key News -->
+  <!-- AI Key News Analysis -->
   <div class="section" style="animation-delay:0.28s">
     <div class="section-title">
-      <div class="section-icon" style="background:rgba(139,92,246,0.12)">📰</div>
-      重點新聞
+      <div class="section-icon" style="background:rgba(139,92,246,0.12)">🤖</div>
+      AI 重點新聞分析
     </div>
     <div class="news-card" style="animation-delay:0.10s">
               <div class="card-header">
                 <span class="news-emoji">🌎</span>
                 <span class="news-tag">地緣政治</span>
-                <span class="impact-badge" style="background:#64748B20;color:#64748B">利空</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
               </div>
-              <h3>伊朗戰爭升級</h3>
-              <p>伊朗戰爭升級對全球能源市場產生影響，油價上漲。美股能源板塊走強，石油公司的股票價格上漲。</p>
+              <h3>中美貿易戰升級</h3>
+              <p>中美貿易戰升級，美國對中國加征關稅，中國反擊，對美貨加征關稅。對港美股產生重大影響，尤其是科技股和出口股。</p>
             </div>
 <div class="news-card" style="animation-delay:0.16s">
               <div class="card-header">
                 <span class="news-emoji">📜</span>
                 <span class="news-tag">監管政策</span>
-                <span class="impact-badge" style="background:#64748B20;color:#64748B">利空</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
               </div>
-              <h3>美國對中國的關稅</h3>
-              <p>美國對中國的關稅政策對兩國貿易關係產生影響，中國的出口企業面臨挑戰。港股和美股的出口板塊走弱。</p>
+              <h3>美國監管政策收緊</h3>
+              <p>美國監管政策收緊，尤其是對科技公司的監管。對美股科技股產生重大影響，尤其是Facebook和Google等公司。</p>
             </div>
 <div class="news-card" style="animation-delay:0.22s">
               <div class="card-header">
@@ -562,30 +1096,384 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
                 <span class="news-tag">總經數據</span>
                 <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
               </div>
-              <h3>美國經濟數據公佈</h3>
-              <p>美國的經濟數據公佈對市場產生影響，投資者關注經濟的走勢。美股的金融板塊走強。</p>
+              <h3>美國GDP增長</h3>
+              <p>美國GDP增長，對美股產生正面影響，尤其是對消費股和工業股。</p>
             </div>
 <div class="news-card" style="animation-delay:0.28s">
+              <div class="card-header">
+                <span class="news-emoji">🏦</span>
+                <span class="news-tag">央行動態</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
+              </div>
+              <h3>美聯儲加息</h3>
+              <p>美聯儲加息，對美股產生重大影響，尤其是對科技股和出口股。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.34s">
               <div class="card-header">
                 <span class="news-emoji">📝</span>
                 <span class="news-tag">企業財報</span>
                 <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
               </div>
-              <h3>企業業績優於預期</h3>
-              <p>部分企業的業績優於預期，對市場產生積極影響。相關股票的價格上漲。</p>
+              <h3>蘋果財報</h3>
+              <p>蘋果財報公佈，對美股科技股產生重大影響，尤其是對蘋果的競爭對手。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.40s">
+              <div class="card-header">
+                <span class="news-emoji">🤝</span>
+                <span class="news-tag">併購消息</span>
+                <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
+              </div>
+              <h3>高通收購</h3>
+              <p>高通收購，對美股科技股產生重大影響，尤其是對高通的競爭對手。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.46s">
+              <div class="card-header">
+                <span class="news-emoji">📈</span>
+                <span class="news-tag">IPO</span>
+                <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
+              </div>
+              <h3>Uber上市</h3>
+              <p>Uber上市，對美股科技股產生重大影響，尤其是對共享經濟公司。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.52s">
+              <div class="card-header">
+                <span class="news-emoji">📊</span>
+                <span class="news-tag">行業趨勢</span>
+                <span class="impact-badge" style="background:#10B98120;color:#10B981">利好</span>
+              </div>
+              <h3>5G技術</h3>
+              <p>5G技術發展，對美股科技股產生重大影響，尤其是對通訊設備公司。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.58s">
+              <div class="card-header">
+                <span class="news-emoji">🌎</span>
+                <span class="news-tag">地緣政治</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
+              </div>
+              <h3>中伊合作</h3>
+              <p>中伊合作，對美股能源股產生重大影響，尤其是對石油公司。</p>
+            </div>
+<div class="news-card" style="animation-delay:0.64s">
+              <div class="card-header">
+                <span class="news-emoji">📜</span>
+                <span class="news-tag">監管政策</span>
+                <span class="impact-badge" style="background:#EF444420;color:#EF4444">利淡</span>
+              </div>
+              <h3>中國監管政策</h3>
+              <p>中國監管政策收緊，對港股科技股產生重大影響，尤其是對互聯網公司。</p>
             </div>
 
   </div>
 
-  <!-- Macro -->
+  <!-- Full News Feed with Links -->
+  <div class="section" style="animation-delay:0.31s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(59,130,246,0.12)">📰</div>
+      全部財經新聞 (30條)
+    </div>
+    <div class="card" style="padding:12px 16px">
+      <div class="feed-item" style="animation-delay:0.05s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Stocks Sink in Broad AI Rout Sparked by China's DeepSeek</h4>
+              <p class="feed-summary">U.S. stocks were mostly lower, with the Nasdaq leading declines as makers of AI infrastructure suffered steep falls, many in the double digits. Nvidia...</p>
+              <a href="https://www.wsj.com/articles/nikkei-may-rise-as-weak-yen-raises-earnings-hopes-776a8056?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.08s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Comex Gold, Silver Settle Lower</h4>
+              <p class="feed-summary">Gold settled 1.4% lower, down two of the past three sessions, and silver fell 2.5%, down three of the past four sessions.</p>
+              <a href="https://www.wsj.com/articles/gold-edges-lower-feds-rate-decision-in-focus-09dbfceb?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.11s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">DeepSeek Won't Sink U.S. AI Titans</h4>
+              <p class="feed-summary">Panic fueling the selloff of Nvidia, Broadcom and other tech giants is overblown.</p>
+              <a href="https://www.wsj.com/articles/deepseek-us-ai-stocks-nvidia-broadcom-6cdfae81?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.14s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Financial Services Roundup: Market Talk</h4>
+              <p class="feed-summary">Gain insight on Experian, SoFi Technologies and more in the latest Market Talks covering Financial Services.</p>
+              <a href="https://www.wsj.com/articles/financial-services-roundup-market-talk-94f52cba?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.17s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Arabica Coffee Prices Hit Record on U.S., Colombia Tariff Spat</h4>
+              <p class="feed-summary">Arabica coffee prices hit a record level, as traders digested the withdrawal of President Trump’s threats to impose tariffs and economic sanctions on ...</p>
+              <a href="https://www.wsj.com/articles/arabica-coffee-prices-hit-new-high-on-u-s-colombia-tariff-spat-582446fe?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.20s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Swiss franc, Japanese yen Rise as DeepSeek News Boosts Safe Havens</h4>
+              <p class="feed-summary">The Yen and Swiss Franc were stronger against the dollar as investors sought safe havens after Chinese start-up DeepSeek’s new AI model hit U.S. tech ...</p>
+              <a href="https://www.wsj.com/articles/safe-haven-currencies-strengthen-amid-fears-over-global-tariffs-9964e17a?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.23s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Natural Gas Falls on Shifting Weather Forecasts</h4>
+              <p class="feed-summary">U.S. natural gas futures fell after weekend updates took some of the chill out of early February weather forecasts.</p>
+              <a href="https://www.wsj.com/articles/u-s-natural-gas-futures-fall-on-shifting-weather-forecasts-1ef3e457?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.26s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Building-Products Distributor QXO Launches Hostile Bid for Beacon</h4>
+              <p class="feed-summary">QXO is taking its offer directly to shareholders after being rebuffed on several occasions.</p>
+              <a href="https://www.wsj.com/articles/building-products-distributor-qxo-launching-hostile-bid-for-beacon-de024410?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.29s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Natural-Gas Firm Diversified Energy Strikes Deal for Permian Basin Player</h4>
+              <p class="feed-summary">Maverick Natural Resources has operations in Texas and Oklahoma.</p>
+              <a href="https://www.wsj.com/articles/natural-gas-firm-diversified-energy-nears-deal-for-permian-basin-player-4c1c5ff5?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.32s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">What's New This Tax Season That Can Save You Money</h4>
+              <p class="feed-summary">There are some new wrinkles, especially for those who sell things online or bought an EV.</p>
+              <a href="https://www.wsj.com/articles/tax-season-2024-irs-filing-dates-explained-628a8b37?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.35s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Chinese Investors With Few Options Turn to Dividends</h4>
+              <p class="feed-summary">Companies with good payouts are now the hottest bet in China markets.</p>
+              <a href="https://www.wsj.com/articles/chinese-investors-with-few-options-turn-to-dividends-ad31dcc4?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.38s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">U.S. Treasury Yields Fall But Direction for Long-End Yields Still Seen Upward</h4>
+              <p class="feed-summary">The 10-year U.S. Treasury yield fell and ING said the the long end of the Treasury curve will continue trading at higher yields even as Trump hasn’t d...</p>
+              <a href="https://www.wsj.com/articles/jgbs-consolidate-supported-by-u-s-treasurys-gains-7edccc7d?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.41s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Russia's Crude Exports Fairly Stable Despite U.S. Sanctions, Goldman Says</h4>
+              <p class="feed-summary">Oil edged lower in early trade as Goldman Sachs said the latest round of U.S. sanctions against Russia haven’t had a significant impact on the country...</p>
+              <a href="https://www.wsj.com/articles/oil-futures-fall-after-trump-calls-for-tariffs-on-colombia-5b2a178c?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.44s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Mon, 27 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">The Extra Reward for Owning Stocks Over Bonds Has Disappeared</h4>
+              <p class="feed-summary">There is little sign of crimped demand for equities among individual investors, who remain bullish after two years of blockbuster gains.</p>
+              <a href="https://www.wsj.com/articles/the-extra-reward-for-owning-stocks-over-bonds-has-disappeared-c3f9c223?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.47s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sun, 26 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Heard on the Street's Stock-Picking Series</h4>
+              <p class="feed-summary">Check out the stocks Heard on the Street writers favor in their eighth annual stock-picking contest.</p>
+              <a href="https://www.wsj.com/articles/heard-on-the-streets-stock-picking-series-98f04640?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.50s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sun, 26 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">What Will It Take for Home Buyers to Start Asking for a Disaster Discount?</h4>
+              <p class="feed-summary">The real costs of owning a house in neighborhoods that are vulnerable to flooding and wildfires are becoming clearer.</p>
+              <a href="https://www.wsj.com/articles/what-will-it-take-for-home-buyers-to-start-asking-for-a-disaster-discount-c662cb96?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.53s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sun, 26 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Now Wanted in Silicon Valley: Ho-Hum Businesses With Thin Profit Margins</h4>
+              <p class="feed-summary">Venture-capital firms are bringing AI and dealmaking to accounting, property management and other unglamorous fields.</p>
+              <a href="https://www.wsj.com/articles/now-wanted-in-silicon-valley-ho-hum-businesses-with-thin-profit-margins-ab07de5f?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.56s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sun, 26 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">In China, a Cat-and-Mouse Game to Rein In Crypto</h4>
+              <p class="feed-summary">Recent court cases reveal how middlemen are facilitating a booming trade, eluding a crackdown.</p>
+              <a href="https://www.wsj.com/articles/china-cryptocurrency-market-trading-restrictions-3e050cd9?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.59s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sat, 25 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">One House, Three Owners: The Ballooning Cost of the American Dream</h4>
+              <p class="feed-summary">The story of home affordability in the U.S. told from a single front porch.</p>
+              <a href="https://www.wsj.com/articles/rising-house-mortgage-costs-north-carolina-home-468a46e5?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.62s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#3B82F6">WSJ Markets</span>
+                <span class="feed-date">Sat, 25 Jan 2025</span>
+              </div>
+              <h4 class="feed-title">Trump Adds Fuel to Claims That Big Banks Discriminate Against Conservatives</h4>
+              <p class="feed-summary">The president has told Bank of America and JPMorgan Chase to stop cutting conservatives off from doing business.</p>
+              <a href="https://www.wsj.com/articles/trump-big-bank-conservative-bias-accusations-168abb27?mod=rss_markets_main" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.65s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Trump’s blockade takes effect. Here’s why stocks are only off modestly for now.</h4>
+              <p class="feed-summary">The American military on Monday was implementing a blockade on all ships entering and exiting Iranian ports. President Donald Trump and the Pentagon b...</p>
+              <a href="https://www.marketwatch.com/story/trumps-blockade-is-starting-heres-why-stocks-are-only-off-modestly-for-now-bcbb67d8?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.68s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Private credit not only won’t spark a financial crisis — it may be more stable than your bank</h4>
+              <p class="feed-summary">With 65% equity cushions and 10-year lockups, Wall Street’s ‘anti-banks’ won’t face a ‘Lehman moment.’</p>
+              <a href="https://www.marketwatch.com/story/private-credit-is-actually-built-to-survive-the-ghosts-of-the-great-financial-crisis-6eaa35d6?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.71s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Why ‘Rule of 10’ stocks like Nvidia and Meta are now poised for a comeback, according to Goldman Sachs</h4>
+              <p class="feed-summary">Higher bond yields have been hitting secular growth stocks, but that may be about to change.</p>
+              <a href="https://www.marketwatch.com/story/why-rule-of-10-stocks-like-nvidia-and-meta-are-now-poised-for-a-comeback-according-to-goldman-sachs-349b5531?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.74s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">My friend’s girlfriend went ‘ballistic’ after he gave his kids $19,000 a year. Is this a red flag?</h4>
+              <p class="feed-summary">“He spent $1,000 on his girlfriend at Christmas and several hundred dollars on each of her children.”</p>
+              <a href="https://www.marketwatch.com/story/my-friends-girlfriend-went-ballistic-after-he-gave-his-kids-19-000-a-year-is-this-a-red-flag-c894366f?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.77s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">The best places to invest now are Chinese tech stocks and this out-of-fashion sector, according to Bank of America</h4>
+              <p class="feed-summary">The stock market is now too big to fail, Bank of America’s Michael Hartnett reckons. So no rate increases before the midterms and a Sino-American dete...</p>
+              <a href="https://www.marketwatch.com/story/why-the-best-stock-markets-bets-are-chinese-tech-stocks-and-this-out-of-fashion-sector-according-to-bank-of-america-d2ec6b6d?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.80s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Energy prices have probably peaked, according to Morgan Stanley’s top strategist. Here’s what that means for stocks.</h4>
+              <p class="feed-summary">Investors should be keeping a close eye on the difference between Brent and U.S. crude, which is sending a message that market worries over the crisis...</p>
+              <a href="https://www.marketwatch.com/story/energy-prices-have-probably-peaked-what-that-means-for-stocks-according-to-morgan-stanleys-mike-wilson-cddb20ea?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.83s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Stocks can rally even without a ‘full return to normality,’ says HSBC</h4>
+              <p class="feed-summary">There’s too much focus from investors on the war in Iran, analysts led by Max Kettner wrote in a note.</p>
+              <a href="https://www.marketwatch.com/story/stocks-can-rally-even-without-a-full-return-to-normality-says-hsbc-ea0f2987?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.86s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">U.S. oil prices rise back above $104 a barrel after Trump threatens to blockade Strait of Hormuz</h4>
+              <p class="feed-summary">Oil prices were surging back above $100 per barrel on Monday morning after a breakdown in talks between the U.S. and Iran over the weekend.</p>
+              <a href="https://www.marketwatch.com/story/oil-prices-rise-as-failed-deal-between-u-s-and-iran-raises-risk-of-prolonged-war-54d27150?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.89s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">Goldman didn’t deliver the blowout earnings that was expected, and the stock is falling</h4>
+              <p class="feed-summary">Goldman’s earnings and revenue beat expectations, but not by as much as investors had hoped.</p>
+              <a href="https://www.marketwatch.com/story/goldman-didnt-deliver-the-blowout-earnings-that-was-expected-and-the-stock-is-falling-377694f6?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+<div class="feed-item" style="animation-delay:0.92s">
+              <div class="feed-header">
+                <span class="feed-source" style="color:#10B981">MarketWatch</span>
+                <span class="feed-date">Mon, 13 Apr 2026</span>
+              </div>
+              <h4 class="feed-title">‘He didn’t seem very alert’: Our CPA said we owe the IRS $443, but we’re actually due a refund of $637. Do we fire him?</h4>
+              <p class="feed-summary">“We’re both concerned about the accuracy of our returns.”</p>
+              <a href="https://www.marketwatch.com/story/he-didnt-seem-very-alert-our-new-cpa-said-we-owe-a-443-tax-refund-but-were-actually-due-637-do-we-fire-him-82590675?mod=mw_rss_topstories" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>
+            </div>
+
+    </div>
+  </div>
+
+  <!-- IPO Section -->
   <div class="section" style="animation-delay:0.34s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(245,158,11,0.12)">🆕</div>
+      新股資訊 (IPO)
+    </div>
+    <div class="card">
+      <h4 style="color:#F59E0B;font-size:13px;margin:16px 0 8px">📋 即將招股 / 上市</h4>
+<div class="table-wrap"><table class="data-table">
+              <thead><tr><th>公司名稱</th><th>招股期</th></tr></thead><tbody>
+<tr>
+                  <td>思格新能</td>
+                  <td>招股期: 2026-04-08 至 2026-04-13</td>
+                </tr>
+</tbody></table></div>
+
+    </div>
+  </div>
+
+  <!-- Macro -->
+  <div class="section" style="animation-delay:0.37s">
     <div class="section-title">
       <div class="section-icon" style="background:rgba(16,185,129,0.12)">📊</div>
       總經數據
     </div>
     <div class="card">
-      <p class="analysis-text">全球經濟數據公佈對市場產生影響，投資者關注經濟的走勢。油價上漲，美股能源板塊走強。</p>
-      <p class="analysis-text" style="color:#F59E0B">📅 近期需關注的經濟事件包括美國的就業數據公佈和中國的貿易數據公佈</p>
+      <p class="analysis-text">美國GDP增長，對美股產生正面影響。美聯儲加息，對美股產生重大影響。中國監管政策收緊，對港股科技股產生重大影響。</p>
+      <p class="analysis-text" style="color:#F59E0B">📅 近期需關注的經濟事件/數據公佈包括美國GDP數據、美聯儲加息決定和中國監管政策變化。</p>
     </div>
   </div>
 
@@ -597,37 +1485,50 @@ header{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fad
     </div>
     <div class="alert-card">
       <ul>
-        <li>地緣政治風險</li>
-<li>監管政策風險</li>
+        <li>中美貿易戰升級</li>
+<li>美聯儲加息</li>
+<li>中國監管政策收緊</li>
 
       </ul>
     </div>
   </div>
 
   <!-- Keywords -->
-  <div class="section" style="animation-delay:0.46s">
+  <div class="section" style="animation-delay:0.43s">
     <div class="section-title">
       <div class="section-icon" style="background:rgba(139,92,246,0.12)">#️⃣</div>
       熱門關鍵字
     </div>
     <div class="keywords">
-      <span class="keyword">AI</span>
-<span class="keyword">電動車</span>
-<span class="keyword">半導體</span>
-<span class="keyword">能源</span>
-<span class="keyword">金融</span>
-<span class="keyword">貿易戰</span>
-<span class="keyword">經濟數據</span>
+      <span class="keyword">中美貿易戰</span>
+<span class="keyword">美聯儲加息</span>
+<span class="keyword">中國監管政策</span>
+<span class="keyword">科技股</span>
+<span class="keyword">能源股</span>
+<span class="keyword">5G技術</span>
+<span class="keyword">共享經濟</span>
     </div>
   </div>
 
   <!-- Footer -->
   <div class="footer">
-    <p>港美股日報 · 自動生成於 2026-04-13 18:43 HKT</p>
+    <p>港美股日報 · 自動生成於 2026-04-13 22:37 HKT</p>
     <p style="margin-top:4px">數據來源：Yahoo Finance · AAStocks · WSJ · CNBC · MarketWatch · ForexLive</p>
     <p style="margin-top:4px;color:#475569">⚠️ 本日報僅供參考，不構成任何投資建議</p>
   </div>
 
 </div>
+
+<script>
+function switchTab(btn, tab) {
+  // Remove active from all buttons and contents in the same container
+  var container = btn.closest('.tab-container');
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  // Activate clicked
+  btn.classList.add('active');
+  container.querySelector('#tab-' + tab).classList.add('active');
+}
+</script>
 </body>
 </html>
