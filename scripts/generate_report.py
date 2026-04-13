@@ -104,10 +104,10 @@ def build_prompt(market_data: dict, news_data: dict) -> str:
 
         if "top_gainers" in market_data["hk"]:
             market_summary += "\n港股升幅榜:\n"
-            for s in market_data["hk"]["top_gainers"]:
+            for s in market_data["hk"]["top_gainers"][:10]:
                 market_summary += f"  🟢 {s['name']}: {s['change_pct']:+.2f}%\n"
             market_summary += "\n港股跌幅榜:\n"
-            for s in market_data["hk"]["top_losers"]:
+            for s in market_data["hk"]["top_losers"][:10]:
                 market_summary += f"  🔴 {s['name']}: {s['change_pct']:+.2f}%\n"
 
     if "us" in market_data:
@@ -123,10 +123,10 @@ def build_prompt(market_data: dict, news_data: dict) -> str:
 
         if "top_gainers" in market_data["us"]:
             market_summary += "\n美股升幅榜:\n"
-            for s in market_data["us"]["top_gainers"]:
+            for s in market_data["us"]["top_gainers"][:10]:
                 market_summary += f"  🟢 {s['name']}: {s['change_pct']:+.2f}%\n"
             market_summary += "\n美股跌幅榜:\n"
-            for s in market_data["us"]["top_losers"]:
+            for s in market_data["us"]["top_losers"][:10]:
                 market_summary += f"  🔴 {s['name']}: {s['change_pct']:+.2f}%\n"
 
     if "other" in market_data:
@@ -137,7 +137,7 @@ def build_prompt(market_data: dict, news_data: dict) -> str:
 
     # Format news
     news_text = ""
-    for a in news_data.get("articles", [])[:50]:  # Limit to 50 articles
+    for a in news_data.get("articles", [])[:50]:
         news_text += f"【{a['source']}】{a['title']}\n"
         if a.get("content"):
             news_text += f"  {a['content'][:200]}\n"
@@ -193,7 +193,7 @@ def build_prompt(market_data: dict, news_data: dict) -> str:
 }}
 
 要求：
-1. key_news 選 4-6 條最重要的新聞，每條都要點出對港美股的實際影響
+1. key_news 選 8-10 條最重要的新聞，每條都要點出對港美股的實際影響
 2. key_movers 港股和美股各選 3-5 隻最值得關注的個股
 3. 所有內容用繁體中文
 4. 保持專業但易懂的語調
@@ -204,11 +204,10 @@ def build_prompt(market_data: dict, news_data: dict) -> str:
 
 # ── HTML Generation ──────────────────────────────────────
 
-def generate_html(analysis: dict, market_data: dict) -> str:
+def generate_html(analysis: dict, market_data: dict, news_data: dict = None) -> str:
     """Generate the full HTML report page."""
 
     date_str = analysis.get("date", "")
-    date_display = date_str  # e.g. "2026-04-10"
 
     # Parse date for Chinese display
     try:
@@ -219,7 +218,7 @@ def generate_html(analysis: dict, market_data: dict) -> str:
         date_display_cn = date_str
 
     # ── Build market table rows ──
-    def make_table_rows(stocks: list, max_rows: int = 20) -> str:
+    def make_table_rows(stocks: list, max_rows: int = 50) -> str:
         rows = ""
         for s in stocks[:max_rows]:
             if "error" in s:
@@ -250,7 +249,33 @@ def generate_html(analysis: dict, market_data: dict) -> str:
             </tr>\n"""
         return rows
 
-    # ── Build news cards ──
+    # ── Build top gainers/losers table ──
+    def make_rank_table(stocks: list, is_gainer: bool = True) -> str:
+        rows = ""
+        for i, s in enumerate(stocks, 1):
+            if "error" in s:
+                continue
+            pct = s["change_pct"]
+            css_class = "price-up" if pct > 0 else ("price-down" if pct < 0 else "price-neutral")
+            arrow = "▲" if pct > 0 else ("▼" if pct < 0 else "─")
+            vol_str = ""
+            if s.get("volume"):
+                if s["volume"] >= 1_000_000_000:
+                    vol_str = f"{s['volume']/1_000_000_000:.1f}B"
+                elif s["volume"] >= 1_000_000:
+                    vol_str = f"{s['volume']/1_000_000:.1f}M"
+                else:
+                    vol_str = f"{s['volume']/1_000:.0f}K"
+            rows += f"""<tr>
+              <td class="rank-num">{i}</td>
+              <td>{s['name']}<span class="symbol">{s['symbol']}</span></td>
+              <td class="{css_class}">{s['close']}</td>
+              <td class="{css_class}">{arrow} {pct:+.2f}%</td>
+              <td>{vol_str}</td>
+            </tr>\n"""
+        return rows
+
+    # ── Build AI analysis news cards ──
     def make_news_cards(news_list: list) -> str:
         cards = ""
         impact_colors = {
@@ -273,6 +298,83 @@ def generate_html(analysis: dict, market_data: dict) -> str:
             </div>\n"""
         return cards
 
+    # ── Build raw news feed with links ──
+    def make_news_feed(articles: list, max_items: int = 30) -> str:
+        if not articles:
+            return '<p class="analysis-text">暫無新聞資訊</p>'
+        items = ""
+        source_colors = {
+            "AAStocks": "#F59E0B",
+            "WSJ Markets": "#3B82F6",
+            "MarketWatch": "#10B981",
+            "CNBC": "#8B5CF6",
+            "ForexLive": "#EF4444",
+            "Reuters Business": "#F97316",
+        }
+        for i, a in enumerate(articles[:max_items]):
+            link = a.get("link", "")
+            title = a.get("title", "")
+            source = a.get("source", "")
+            content = a.get("content", "")
+            color = source_colors.get(source, "#64748B")
+            delay = f"{0.05 + i * 0.03:.2f}s"
+
+            link_html = ""
+            if link:
+                link_html = f'<a href="{link}" target="_blank" rel="noopener" class="news-link">閱讀全文 →</a>'
+
+            content_html = ""
+            if content:
+                content_html = f'<p class="feed-summary">{content[:150]}{"..." if len(content) > 150 else ""}</p>'
+
+            items += f"""<div class="feed-item" style="animation-delay:{delay}">
+              <div class="feed-header">
+                <span class="feed-source" style="color:{color}">{source}</span>
+                <span class="feed-date">{a.get('pubDate', '')[:16]}</span>
+              </div>
+              <h4 class="feed-title">{title}</h4>
+              {content_html}
+              {link_html}
+            </div>\n"""
+        return items
+
+    # ── Build IPO section ──
+    def make_ipo_section(ipo_data: list) -> str:
+        if not ipo_data:
+            return '<p class="analysis-text">暫無新股資訊</p>'
+
+        recent = [i for i in ipo_data if not i.get("upcoming")]
+        upcoming = [i for i in ipo_data if i.get("upcoming")]
+
+        html = ""
+        if recent:
+            html += """<div class="table-wrap"><table class="data-table">
+              <thead><tr><th>股票代碼</th><th>公司名稱</th><th>上市日期</th><th></th></tr></thead><tbody>\n"""
+            for ipo in recent[:15]:
+                link_html = ""
+                if ipo.get("link"):
+                    link_html = f'<a href="{ipo["link"]}" target="_blank" rel="noopener" class="ipo-link">詳情</a>'
+                html += f"""<tr>
+                  <td class="ipo-code">{ipo.get('code', '')}</td>
+                  <td>{ipo.get('name', '')}</td>
+                  <td>{ipo.get('listing_date', '')}</td>
+                  <td>{link_html}</td>
+                </tr>\n"""
+            html += "</tbody></table></div>\n"
+
+        if upcoming:
+            html += '<h4 style="color:#F59E0B;font-size:13px;margin:16px 0 8px">📋 即將招股 / 上市</h4>\n'
+            html += """<div class="table-wrap"><table class="data-table">
+              <thead><tr><th>公司名稱</th><th>招股期</th></tr></thead><tbody>\n"""
+            for ipo in upcoming[:10]:
+                html += f"""<tr>
+                  <td>{ipo.get('name', '')}</td>
+                  <td>{ipo.get('listing_date', '')}</td>
+                </tr>\n"""
+            html += "</tbody></table></div>\n"
+
+        return html
+
     # ── Build keyword tags ──
     def make_keywords(keywords: list) -> str:
         return "\n".join(f'<span class="keyword">{k}</span>' for k in keywords)
@@ -287,9 +389,13 @@ def generate_html(analysis: dict, market_data: dict) -> str:
     # ── HK market data ──
     hk_indices_rows = ""
     hk_stocks_rows = ""
+    hk_gainers_rows = ""
+    hk_losers_rows = ""
     if "hk" in market_data:
         hk_indices_rows = make_table_rows(market_data["hk"].get("indices", []))
         hk_stocks_rows = make_table_rows(market_data["hk"].get("stocks", []))
+        hk_gainers_rows = make_rank_table(market_data["hk"].get("top_gainers", []), is_gainer=True)
+        hk_losers_rows = make_rank_table(market_data["hk"].get("top_losers", []), is_gainer=False)
 
     # ── US market data ──
     us_indices_rows = ""
@@ -301,7 +407,17 @@ def generate_html(analysis: dict, market_data: dict) -> str:
     # ── Other indicators ──
     other_rows = make_table_rows(market_data.get("other", []))
 
-    # ── HK analysis ──
+    # ── IPO data ──
+    ipo_html = make_ipo_section(market_data.get("hk_ipo", []))
+
+    # ── News feed (raw articles with links) ──
+    raw_articles = []
+    if news_data and "articles" in news_data:
+        raw_articles = news_data["articles"]
+    news_feed_html = make_news_feed(raw_articles, max_items=30)
+    news_count = min(len(raw_articles), 30)
+
+    # ── Analysis sections ──
     hk_analysis = analysis.get("hk_market", {})
     us_analysis = analysis.get("us_market", {})
     macro = analysis.get("macro_indicators", {})
@@ -369,6 +485,10 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
 .price-up{{color:#10B981;font-weight:600}}
 .price-down{{color:#EF4444;font-weight:600}}
 .price-neutral{{color:#94A3B8}}
+.rank-num{{color:#F59E0B;font-weight:700;font-size:14px;width:30px}}
+.ipo-code{{color:#3B82F6;font-weight:600}}
+.ipo-link{{color:#F59E0B;text-decoration:none;font-size:12px}}
+.ipo-link:hover{{text-decoration:underline}}
 
 /* Cards */
 .card{{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:20px 24px;margin-bottom:12px;transition:all 0.2s ease}}
@@ -376,7 +496,7 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
 .card h3{{font-size:14.5px;font-weight:600;margin-bottom:8px}}
 .card p{{font-size:13.5px;color:#94A3B8;line-height:1.75}}
 
-/* News Cards */
+/* News Cards (AI analysis) */
 .news-card{{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 22px;margin-bottom:10px;transition:all 0.2s ease;animation:fadeUp 0.5s ease both}}
 .news-card:hover{{background:rgba(255,255,255,0.05);border-color:rgba(245,158,11,0.2);transform:translateY(-2px)}}
 .card-header{{display:flex;align-items:center;gap:8px;margin-bottom:8px}}
@@ -385,6 +505,17 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
 .impact-badge{{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:10px}}
 .news-card h3{{font-size:14px;font-weight:600;margin-bottom:6px}}
 .news-card p{{font-size:13px;color:#94A3B8;line-height:1.7}}
+
+/* News Feed (raw articles with links) */
+.feed-item{{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px 18px;margin-bottom:8px;transition:all 0.2s ease;animation:fadeUp 0.4s ease both}}
+.feed-item:hover{{background:rgba(255,255,255,0.04);border-color:rgba(59,130,246,0.15);transform:translateY(-1px)}}
+.feed-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}}
+.feed-source{{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}}
+.feed-date{{font-size:10.5px;color:#475569}}
+.feed-title{{font-size:13.5px;font-weight:600;color:#E3F2FD;line-height:1.5;margin-bottom:4px}}
+.feed-summary{{font-size:12px;color:#64748B;line-height:1.6;margin-bottom:6px}}
+.news-link{{display:inline-block;color:#3B82F6;font-size:12px;text-decoration:none;font-weight:500;transition:color 0.2s}}
+.news-link:hover{{color:#60A5FA;text-decoration:underline}}
 
 /* Movers */
 .movers-grid{{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}}
@@ -405,6 +536,15 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
 
 /* Analysis text */
 .analysis-text{{font-size:13.5px;color:#94A3B8;line-height:1.8;margin-bottom:12px}}
+
+/* Tabs for gainers/losers */
+.tab-container{{margin-bottom:12px}}
+.tab-buttons{{display:flex;gap:0;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08)}}
+.tab-btn{{padding:8px 20px;font-size:13px;font-weight:600;color:#64748B;background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s}}
+.tab-btn.active{{color:#F59E0B;border-bottom-color:#F59E0B}}
+.tab-btn:hover{{color:#94A3B8}}
+.tab-content{{display:none}}
+.tab-content.active{{display:block}}
 
 /* Footer */
 .footer{{text-align:center;padding:40px 0 20px;color:#475569;font-size:11.5px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}}
@@ -478,6 +618,38 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
     </div>
   </div>
 
+  <!-- HK Top Gainers / Losers -->
+  <div class="section" style="animation-delay:0.13s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(16,185,129,0.12)">📈</div>
+      港股升跌排行榜
+    </div>
+    <div class="card">
+      <div class="tab-container">
+        <div class="tab-buttons">
+          <button class="tab-btn active" onclick="switchTab(this,'gainers')">🟢 升幅榜</button>
+          <button class="tab-btn" onclick="switchTab(this,'losers')">🔴 跌幅榜</button>
+        </div>
+        <div class="tab-content active" id="tab-gainers">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+              <tbody>{hk_gainers_rows}</tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-losers">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>股票</th><th>收盤</th><th>漲跌</th><th>成交量</th></tr></thead>
+              <tbody>{hk_losers_rows}</tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- US Market -->
   <div class="section" style="animation-delay:0.16s">
     <div class="section-title">
@@ -524,17 +696,39 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
     </div>
   </div>
 
-  <!-- Key News -->
+  <!-- AI Key News Analysis -->
   <div class="section" style="animation-delay:0.28s">
     <div class="section-title">
-      <div class="section-icon" style="background:rgba(139,92,246,0.12)">📰</div>
-      重點新聞
+      <div class="section-icon" style="background:rgba(139,92,246,0.12)">🤖</div>
+      AI 重點新聞分析
     </div>
     {make_news_cards(analysis.get('key_news', []))}
   </div>
 
-  <!-- Macro -->
+  <!-- Full News Feed with Links -->
+  <div class="section" style="animation-delay:0.31s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(59,130,246,0.12)">📰</div>
+      全部財經新聞 ({news_count}條)
+    </div>
+    <div class="card" style="padding:12px 16px">
+      {news_feed_html}
+    </div>
+  </div>
+
+  <!-- IPO Section -->
   <div class="section" style="animation-delay:0.34s">
+    <div class="section-title">
+      <div class="section-icon" style="background:rgba(245,158,11,0.12)">🆕</div>
+      新股資訊 (IPO)
+    </div>
+    <div class="card">
+      {ipo_html}
+    </div>
+  </div>
+
+  <!-- Macro -->
+  <div class="section" style="animation-delay:0.37s">
     <div class="section-title">
       <div class="section-icon" style="background:rgba(16,185,129,0.12)">📊</div>
       總經數據
@@ -559,7 +753,7 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
   </div>
 
   <!-- Keywords -->
-  <div class="section" style="animation-delay:0.46s">
+  <div class="section" style="animation-delay:0.43s">
     <div class="section-title">
       <div class="section-icon" style="background:rgba(139,92,246,0.12)">#️⃣</div>
       熱門關鍵字
@@ -577,6 +771,18 @@ header{{display:flex;align-items:center;gap:16px;margin-bottom:36px;animation:fa
   </div>
 
 </div>
+
+<script>
+function switchTab(btn, tab) {{
+  // Remove active from all buttons and contents in the same container
+  var container = btn.closest('.tab-container');
+  container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  // Activate clicked
+  btn.classList.add('active');
+  container.querySelector('#tab-' + tab).classList.add('active');
+}}
+</script>
 </body>
 </html>"""
 
@@ -589,14 +795,12 @@ def update_index(docs_dir: str, date_str: str):
     """Update or create index.html with links to all reports."""
     import glob
 
-    # Find all report files
     pattern = os.path.join(docs_dir, "stock-*.html")
     files = sorted(glob.glob(pattern), reverse=True)
 
     links = ""
     for f in files:
         fname = os.path.basename(f)
-        # Extract date from filename: stock-2026-04-10.html
         d = fname.replace("stock-", "").replace(".html", "")
         try:
             dt = datetime.strptime(d, "%Y-%m-%d")
@@ -684,7 +888,6 @@ def main():
         result_text = provider_fn(prompt)
 
     # Parse JSON from LLM response
-    # Strip markdown code fences if present
     clean = result_text.strip()
     if clean.startswith("```"):
         clean = clean.split("\n", 1)[1] if "\n" in clean else clean[3:]
@@ -699,7 +902,6 @@ def main():
     except json.JSONDecodeError as e:
         print(f"❌ Failed to parse LLM response as JSON: {e}", file=sys.stderr)
         print(f"Raw response:\n{result_text[:500]}", file=sys.stderr)
-        # Try to extract JSON from response
         import re
         json_match = re.search(r'\{[\s\S]*\}', result_text)
         if json_match:
@@ -712,8 +914,8 @@ def main():
         else:
             sys.exit(1)
 
-    # Generate HTML
-    html = generate_html(analysis, market_data)
+    # Generate HTML (now also passing news_data for the raw news feed)
+    html = generate_html(analysis, market_data, news_data)
 
     # Write output
     os.makedirs(args.output, exist_ok=True)

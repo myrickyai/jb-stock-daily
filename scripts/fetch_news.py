@@ -53,7 +53,7 @@ HEADERS = {
 
 
 # ── AAStocks 港股新聞抓取 ─────────────────────────────────
-def fetch_aastocks_news(max_items: int = 30) -> list:
+def fetch_aastocks_news(max_items: int = 50) -> list:
     """
     Scrape latest HK stock news from AAStocks.
     URL: https://www.aastocks.com/tc/stocks/news/aafn
@@ -234,7 +234,6 @@ def filter_by_date(articles: list, target_date: str) -> list:
             if local_dt.date() == target:
                 filtered.append(a)
         elif a.get("pubDate", "").startswith(target_date):
-            # AAStocks 格式: "2026-04-10"
             filtered.append(a)
 
     return filtered
@@ -282,9 +281,7 @@ def main():
         all_articles.extend(aastocks)
         print(f"  AAStocks: {len(aastocks)} articles found", file=sys.stderr)
 
-    # Filter by date (optional, RSS 可能沒有精確日期)
-    # filtered = filter_by_date(all_articles, target_date)
-    # 由於部分 RSS 日期格式不一，先保留全部，讓 AI 篩選
+    # Keep all articles, let AI filter
     filtered = all_articles
 
     # Deduplicate by title similarity
@@ -313,7 +310,6 @@ def main():
     elif args.json:
         print(output_json)
     else:
-        # Plain text output for AI consumption
         if not deduped:
             print(f"NO_CONTENT:{target_date}")
         else:
