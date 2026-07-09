@@ -1,0 +1,129 @@
+{
+  "date": "2026-07-09",
+  "core_summary": "港美股今日走勢偏弱，恒生指數下跌0.7%，而美股方面，道瓊斯工業平均指數下跌1.09%。中國的DeepSeek事件引發的AI相關股跌幅較大，對市場產生了較大影響。",
+  "hk_market": {
+    "overview": "港股今日整體表現偏弱，主要受科技股拖累。恒生指數收跌0.7%，成交額減少。地產股和金融股表現相對較好。",
+    "key_movers": [
+      {
+        "name": "騰訊控股",
+        "symbol": "0700.HK",
+        "change": "-1.92%",
+        "reason": "受DeepSeek事件影響"
+      },
+      {
+        "name": "阿里巴巴",
+        "symbol": "9988.HK",
+        "change": "+0.47%",
+        "reason": "公司基本面仍然較好"
+      },
+      {
+        "name": "新鴻基地產",
+        "symbol": "0016.HK",
+        "change": "+1.95%",
+        "reason": "地產股輪動"
+      }
+    ],
+    "sector_analysis": "科技股受DeepSeek事件影響較大，地產股和金融股相對較好"
+  },
+  "us_market": {
+    "overview": "美股昨晚表現偏弱，主要受科技股拖累。道瓊斯工業平均指數下跌1.09%，納斯達克綜合指數上漲0.20%。",
+    "key_movers": [
+      {
+        "name": "蘋果",
+        "symbol": "AAPL",
+        "change": "+0.88%",
+        "reason": "公司基本面仍然較好"
+      },
+      {
+        "name": "英偉達",
+        "symbol": "NVDA",
+        "change": "+3.65%",
+        "reason": "AI相關股表現較好"
+      },
+      {
+        "name": "微軟",
+        "symbol": "MSFT",
+        "change": "-1.41%",
+        "reason": "受DeepSeek事件影響"
+      }
+    ],
+    "sector_analysis": "科技股受DeepSeek事件影響較大，AI相關股表現較好"
+  },
+  "key_news": [
+    {
+      "tag": "地緣政治",
+      "emoji": "🌎",
+      "title": "伊朗戰事",
+      "summary": "伊朗戰事對全球能源市場產生影響，油價上漲。對港美股的影響：能源股上漲，其他板塊表現偏弱",
+      "impact": "利淡"
+    },
+    {
+      "tag": "監管政策",
+      "emoji": "📜",
+      "title": "AI監管",
+      "summary": "美國政府對AI監管的態度將對科技股產生影響。對港美股的影響：AI相關股表現偏弱",
+      "impact": "利淡"
+    },
+    {
+      "tag": "總經數據",
+      "emoji": "📊",
+      "title": "美國GDP",
+      "summary": "美國GDP數據將對市場產生影響。對港美股的影響：市場預期偏樂觀",
+      "impact": "利好"
+    },
+    {
+      "tag": "央行動態",
+      "emoji": "🏦",
+      "title": "聯邦儲備局",
+      "summary": "聯邦儲備局的利率決策將對市場產生影響。對港美股的影響：市場預期偏樂觀",
+      "impact": "利好"
+    },
+    {
+      "tag": "企業財報",
+      "emoji": "📝",
+      "title": "蘋果財報",
+      "summary": "蘋果的財報將對市場產生影響。對港美股的影響：市場預期偏樂觀",
+      "impact": "利好"
+    },
+    {
+      "tag": "併購消息",
+      "emoji": "🤝",
+      "title": "高通併購",
+      "summary": "高通的併購將對市場產生影響。對港美股的影響：市場預期偏樂觀",
+      "impact": "利好"
+    },
+    {
+      "tag": "IPO",
+      "emoji": "📈",
+      "title": "SK Hynix IPO",
+      "summary": "SK Hynix的IPO將對市場產生影響。對港美股的影響：市場預期偏樂觀",
+      "impact": "利好"
+    },
+    {
+      "tag": "行業趨勢",
+      "emoji": "📊",
+      "title": "AI趨勢",
+      "summary": "AI的發展趨勢將對市場產生影響。對港美股的影響：AI相關股表現偏弱",
+      "impact": "利淡"
+    }
+  ],
+  "macro_indicators": {
+    "summary": "重要總經數據摘要：美國GDP、聯邦儲備局利率決策、油價等",
+    "upcoming": "近期需關注的經濟事件/數據公佈：美國GDP、聯邦儲備局利率決策等"
+  },
+  "risk_alerts": [
+    "伊朗戰事",
+    "AI監管",
+    "美國GDP",
+    "聯邦儲備局利率決策"
+  ],
+  "keywords": [
+    "AI",
+    "伊朗戰事",
+    "美國GDP",
+    "聯邦儲備局",
+    "蘋果",
+    "高通",
+    "SK Hynix"
+  ]
+}
